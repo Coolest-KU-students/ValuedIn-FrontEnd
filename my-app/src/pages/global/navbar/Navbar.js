@@ -153,7 +153,6 @@ export default function Navbar(props) {
     const handleThemeChange = (e) => {
        // dispatch(ChangeTheme(e.target.checked ? 'Light' : 'Dark'));
     };
-    console.log(classes);
     return (
         <div className={classes.root}>
             <CssBaseline />

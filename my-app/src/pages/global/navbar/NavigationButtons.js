@@ -15,11 +15,12 @@ import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import Collapse from '@mui/material/Collapse';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function NavigationButtons(props) {
     const [open, setOpen] = useState(false);
 
-    //const theme = useSelector((state) => state.Theme);
+    const theme = useSelector((state) => state.Theme);
 
     const handleClick = () => {
         setOpen(!open);

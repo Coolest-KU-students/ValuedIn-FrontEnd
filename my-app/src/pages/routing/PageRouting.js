@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import Navbar from '../global/navbar/Navbar';
 
@@ -51,7 +52,6 @@ const PageRouting = () => {
                 {IsAuthenticated && (
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
-                        <div>Authenticated</div>
                         <Switch>
                             <Route exact path="/issues">
                                 {/*   <IssueList AdjustNavbar={AdjustNavbar} />*/}
@@ -63,7 +63,7 @@ const PageRouting = () => {
                                 {/* <StepList AdjustNavbar={AdjustNavbar} />*/}
                             </Route>
                             <Route exact path="/users">
-                                {/* <UserList AdjustNavbar={AdjustNavbar} />*/}
+                                <UsersList AdjustNavbar={AdjustNavbar} />
                             </Route>
                             <Route exact path="/importances">
                                 {/*<ImportanceList AdjustNavbar={AdjustNavbar} />*/}
