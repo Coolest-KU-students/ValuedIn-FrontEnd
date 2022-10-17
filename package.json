@@ -1,0 +1,19 @@
+{
+  "name": "valuedin-frontend",
+  "version": "1.0.0",
+  "description": "ValuedIn Frontend services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuxess/ValuedIn-frontend.git"
+  },
+  "author": "Lukas Jankauskas, Ignas Ramašauskas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liuxess/ValuedIn-frontend/issues"
+  },
+  "homepage": "https://github.com/liuxess/ValuedIn-frontend#readme"
+}
