@@ -15,24 +15,13 @@ import Modal from '@mui/material/Modal';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 //import { ChangeUserExpiration, LoadPaginatedData } from '../../DataSources/Users';
-//import UserModal from './UserModal';
+import UserModal from './UserModal';
 import { makeStyles } from 'tss-react/mui';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
         SortingArrow: {
             marginTop: '0',
-        },
-        content: {
-            marginTop: '5rem',
-            marginLeft: drawerWidth,
-            width: `calc(100% - ${drawerWidth}px)`,
-            [theme.breakpoints.down('md')]: {
-                marginLeft: '3rem',
-                width: '95%',
-            },
-            display: 'inline-flex',
-            flexDirection: 'column',
         },
         TableRows: {
             '&:nth-of-type(odd)': {
@@ -93,7 +82,7 @@ const UsersList = ({ AdjustNavbar }) => {
         else setColumn({ name: Column, ascending: true });
     };
 
-    const ColumnWidths = [15, 10, 15, 5, 5];
+    const ColumnWidths = [15, 10, 10, 15, 5, 5];
 
     const SumWidths = ColumnWidths.reduce((a, b) => a + b, 0);
 
@@ -157,14 +146,13 @@ const UsersList = ({ AdjustNavbar }) => {
 
     return (
         <React.Fragment>
-            {/*<Modal open={ModalIsOpen} onClose={handleClose}>
+            <Modal open={ModalIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} />
             </Modal>
             <Modal open={EditIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} userDetails={currentUser} />
-    </Modal>*/}
+    </Modal>
             {users ? (
-                <Container maxWidth="xl" className={classes.content}>
                     <TableContainer
                         component={Paper}
                         style={{ padding: '1rem', paddingBottom: '0px', backgroundColor: theme.tableContainerColor }}
@@ -205,7 +193,23 @@ const UsersList = ({ AdjustNavbar }) => {
                                         </Button>
                                     </TableCell>
 
-                                    <TableCell align="right" width={(100 * ColumnWidths[1]) / SumWidths + '%'}>
+                                    <TableCell align="left" width={(100 * ColumnWidths[1]) / SumWidths + '%'}>
+                                        <Button
+                                            onClick={() => {
+                                                SortData('Role');
+                                            }}
+                                        >
+                                            <Typography variant="h6">Role</Typography>
+                                            {column.name === 'Role' &&
+                                                (column.ascending ? (
+                                                    <ArrowDownwardIcon className={classes.SortingArrow} />
+                                                ) : (
+                                                    <ArrowUpwardIcon className={classes.SortingArrow} />
+                                                ))}
+                                        </Button>
+                                    </TableCell>
+
+                                    <TableCell align="right" width={(100 * ColumnWidths[2]) / SumWidths + '%'}>
                                         <Button
                                             onClick={() => {
                                                 SortData('lastName');
@@ -220,8 +224,8 @@ const UsersList = ({ AdjustNavbar }) => {
                                                 ))}
                                         </Button>
                                     </TableCell>
-
-                                    <TableCell align="center" width={(100 * ColumnWidths[2]) / SumWidths + '%'}>
+                                        
+                                    <TableCell align="center" width={(100 * ColumnWidths[3]) / SumWidths + '%'}>
                                         <Button
                                             onClick={() => {
                                                 SortData('lastActive');
@@ -236,10 +240,10 @@ const UsersList = ({ AdjustNavbar }) => {
                                                 ))}
                                         </Button>
                                     </TableCell>
-                                    <TableCell align="center" width={(100 * ColumnWidths[3]) / SumWidths + '%'}>
+                                    <TableCell align="center" width={(100 * ColumnWidths[4]) / SumWidths + '%'}>
                                         <Typography variant="h6">{showExpired ? 'RESTORE' : 'EXPIRE'}</Typography>
                                     </TableCell>
-                                    <TableCell align="center" width={(100 * ColumnWidths[4]) / SumWidths + '%'}>
+                                    <TableCell align="center" width={(100 * ColumnWidths[5]) / SumWidths + '%'}>
                                         <Typography variant="h6">EDIT</Typography>
                                     </TableCell>
                                 </TableRow>
@@ -254,6 +258,11 @@ const UsersList = ({ AdjustNavbar }) => {
                                             style={{ paddingLeft: '2rem ' }}
                                         >
                                             {user.login}
+                                        </TableCell>
+
+                                        <TableCell align="left" className={classes.BodyTableCells} 
+                                            style={{ paddingLeft: '2rem ' }}>
+                                            {user.role}
                                         </TableCell>
 
                                         <TableCell align="right" className={classes.BodyTableCells}>
@@ -305,7 +314,6 @@ const UsersList = ({ AdjustNavbar }) => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Container>
             ) : (
                 <Container>Loading...</Container>
             )}
@@ -323,10 +331,10 @@ const getMockData = (configuration) => {
     console.log(configuration);
     return {
         content: [
-            { login: 'Lukas', firstName: 'Lu', lastName: 'Kas', lastActive: '1999/04/26' },
-            { login: 'Vulkas', firstName: 'Vul', lastName: 'Kas', lastActive: '1999/06/26' },
-            { login: 'Vuldas', firstName: 'Vul', lastName: 'Das', lastActive: '1999/07/26' },
-            { login: 'Valdas', firstName: 'Val', lastName: 'Das', lastActive: '1999/09/26' },
+            { login: 'Lukas', role: 'Admin', firstName: 'Lu', lastName: 'Kas', lastActive: '1999/05/26' },
+            { login: 'Luknas', role: 'HR', firstName: 'Luk', lastName: 'Nas', lastActive: '1999/06/26' },
+            { login: 'Lignas', role: 'Regular', firstName: 'Lig', lastName: 'Nas', lastActive: '1999/07/26' },
+            { login: 'Ignas', role: 'SysAdmin', firstName: 'Ig', lastName: 'Nas', lastActive: '1999/08/26' },
         ],
         pageable: {
             sort: { sorted: true, unsorted: false, empty: false },

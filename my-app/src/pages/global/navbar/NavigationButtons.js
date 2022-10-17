@@ -69,13 +69,13 @@ export default function NavigationButtons(props) {
                 {open ? <ExpandLess color='#cadafa' /> : <ExpandMore color='#cadafa' />}
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
-                <ListItem component={Link} to="/steps" button style={styleBasedOnType('Steps')}>
+                <ListItem component={Link} to="/jobs" button style={styleBasedOnType('Jobs')}>
                     <ListItemIcon>
                         <LibraryAddCheckIcon color='#cadafa' />
                     </ListItemIcon>
                     <ListItemText primary="Jobs" />
                 </ListItem>
-                <ListItem component={Link} to="/importances" button style={styleBasedOnType('Importance')}>
+                <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Organizations')}>
                     <ListItemIcon>
                         <PriorityHighIcon color='#cadafa' />
                     </ListItemIcon>
