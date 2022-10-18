@@ -75,7 +75,7 @@ export default function NavigationButtons(props) {
                     </ListItemIcon>
                     <ListItemText primary="Jobs" />
                 </ListItem>
-                <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Organizations')}>
+                <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Orgs')}>
                     <ListItemIcon>
                         <PriorityHighIcon color='#cadafa' />
                     </ListItemIcon>

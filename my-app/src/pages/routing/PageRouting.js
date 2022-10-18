@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import JobFeed from '../feeds/jobs/JobFeed';
+import OrganizationFeed from '../feeds/organizations/OrganizationFeed';
 import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
 
@@ -55,7 +56,7 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
-                            <Route exact path="/issues">
+                            <Route exact path="/jobs">
                             
                                 <MainBodyWrapper>
                                     <JobFeed AdjustNavbar={AdjustNavbar} />
@@ -66,8 +67,10 @@ const PageRouting = () => {
                             <Route exact path="/issues/:id">
                                 {/* <IssueView AdjustNavbar={AdjustNavbar} />*/}
                             </Route>
-                            <Route exact path="/steps">
-                                {/* <StepList AdjustNavbar={AdjustNavbar} />*/}
+                            <Route exact path="/organizations">
+                                <MainBodyWrapper>
+                                    <OrganizationFeed AdjustNavbar={AdjustNavbar} />
+                                </MainBodyWrapper>
                             </Route>
                             <Route exact path="/users">
                                 <MainBodyWrapper>
@@ -85,7 +88,7 @@ const PageRouting = () => {
                                     return <Redirect exact to="/" />;
                                 }}
                             />
-                            <Redirect exact to="/issues" />
+                            <Redirect exact to="/jobs"/>
                         </Switch>
                     </>
                 )}
