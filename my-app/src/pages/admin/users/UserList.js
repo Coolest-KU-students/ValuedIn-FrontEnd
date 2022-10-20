@@ -17,6 +17,7 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 //import { ChangeUserExpiration, LoadPaginatedData } from '../../DataSources/Users';
 import UserModal from './UserModal';
 import { makeStyles } from 'tss-react/mui';
+import { ChangeUserExpiration, LoadPaginatedData } from '../../../API/internal_datasources/Users';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -115,7 +116,8 @@ const UsersList = ({ AdjustNavbar }) => {
     };
 
     const ChangeExpiration = (login) => {
-       // ChangeUserExpiration(login, DataReload);
+        ChangeUserExpiration(login, DataReload);
+        
     };
     
 
@@ -196,11 +198,11 @@ const UsersList = ({ AdjustNavbar }) => {
                                     <TableCell align="left" width={(100 * ColumnWidths[1]) / SumWidths + '%'}>
                                         <Button
                                             onClick={() => {
-                                                SortData('Role');
+                                                SortData('role');
                                             }}
                                         >
                                             <Typography variant="h6">Role</Typography>
-                                            {column.name === 'Role' &&
+                                            {column.name === 'role' &&
                                                 (column.ascending ? (
                                                     <ArrowDownwardIcon className={classes.SortingArrow} />
                                                 ) : (
@@ -322,7 +324,7 @@ const UsersList = ({ AdjustNavbar }) => {
 };
 
 export default UsersList;
-
+/*
 const LoadPaginatedData = (setData, configuration) => {
     setData(getMockData(configuration));
 };
@@ -354,5 +356,5 @@ const getMockData = (configuration) => {
         number: 0,
         empty: false,
     };
-};
+};*/
 

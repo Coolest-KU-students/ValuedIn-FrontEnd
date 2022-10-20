@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Paper, TextField, Typography } from '@mui/material/';
+import { Button, Checkbox, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material/';
 import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
 //import Notification from '../../GlobalFeatures/Notification';
 //import { createNewUser, UpdateUser } from '../../DataSources/Users';
 import { makeStyles } from 'tss-react/mui';
+import { createNewUser, UpdateUser  } from '../../../API/internal_datasources/Users';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
@@ -34,6 +35,7 @@ export default function UserModal({ callback, userDetails }) {
     });
     const [login, setLogin] = useState(userDetails.login);
     const [password, setPassword] = useState(userDetails.password);
+    const [role, setRole] = useState(userDetails.role);
     const [requirePasswordChange, setRequirePasswordChange] = useState(false);
 
     const handleLoad = () => {
@@ -55,30 +57,33 @@ export default function UserModal({ callback, userDetails }) {
     };
 
     const createNew = () => {
-        /*createNewUser(
+        createNewUser(
             {
                 firstName: fullName.firstName,
                 lastName: fullName.lastName,
+                role: role, 
                 login: login,
                 password: password,
-                changePasswordOnLogin: requirePasswordChange,
+                //changePasswordOnLogin: requirePasswordChange,
             },
             Callback
-        );*/
-        setTimeout(800, Callback); //fake saving
+        );
+        //setTimeout(800, Callback); //fake saving
 
     };
 
     const updateCurrent = () => {
-        /*UpdateUser(
+        
+        UpdateUser(
             {
                 firstName: fullName.firstName,
                 lastName: fullName.lastName,
                 login: login,
+                role: role,
             },
             Callback
-        );*/
-        setTimeout(800, Callback); //fake saving
+        );
+        //setTimeout(800, Callback); //fake saving
     };
 
     const Callback = () => {
@@ -130,20 +135,23 @@ export default function UserModal({ callback, userDetails }) {
                     variant="outlined"
                     onChange={setLastName}
                 />
-                <TextField
-                    label="Login"
-                    disabled={savingInProgress && userDetails}
+                <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                <Select
+                    id="demo-simple-select" 
+                    value={role}
+                    label="Role"
                     style={{ margin: 8 }}
+                    defaultValue={"DEFAULT"}
                     fullWidth
-                    required
-                    value={login}
-                    margin="normal"
-                    variant="outlined"
-                    disabled={!createUser}
-                    onChange={(e) => {
-                        setLogin(e.target.value);
-                    }}
-                />
+                    onChange={(e)=>{setRole(e.target.value)}}
+                >   
+                    <MenuItem value={"DEFAULT"}>Default user</MenuItem>
+                    <MenuItem value={"HR"}>HR manager</MenuItem>
+                    <MenuItem value={"ORG_ADMIN"}>Org Administrator</MenuItem>
+                    <MenuItem value={"SYSADMIN"}>System Administrator</MenuItem>
+                </Select>
+                </FormControl>
                 {createUser && (
                     <>
                         <TextField
