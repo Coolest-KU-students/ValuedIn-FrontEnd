@@ -4,7 +4,7 @@ const USER_ROLES = {
         systemRole: true,
         systemName: "DEFAULT",
         userFriendlyName: "Default user",
-        inheritedRoles: []
+        inheritedRoles: ["GUEST"]
     },
     HR: {
         systemRole: true,
@@ -22,6 +22,18 @@ const USER_ROLES = {
         systemRole: true,
         systemName: "SYSADMIN",
         userFriendlyName: "System Administrator",
+        inheritedRoles: []
+    },
+    GUEST: {
+        systemRole: false,
+        systemName: "GUEST",
+        userFriendlyName: "Guest user",
+        inheritedRoles: []
+    },
+    UNAUTHENTICATED: {
+        systemRole: false,
+        systemName: "UNAUTHENTICATED",
+        userFriendlyName: "Unauthenticated",
         inheritedRoles: []
     }
 };

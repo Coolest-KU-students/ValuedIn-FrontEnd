@@ -16,11 +16,14 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import Collapse from '@mui/material/Collapse';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import CheckForUserPermissions from '../../../config/permissions/RoleAppPermissions';
+import APP_GROUPS from '../../../config/enums/AppGroups';
 
 export default function NavigationButtons(props) {
     const [open, setOpen] = useState(false);
 
     const theme = useSelector((state) => state.Theme);
+    const userRole = useSelector(state => state.UserRole);
 
     const handleClick = () => {
         setOpen(!open);
@@ -34,55 +37,68 @@ export default function NavigationButtons(props) {
         else return { backgroundColor: 'inherit' };
     };
 
+    const UseHasAccessTo=(appGroup)=>{
+       return CheckForUserPermissions(userRole, appGroup);
+    }
+
     return (
         <div>
             <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
                 Navigation
             </ListSubheader>
-             <ListItem button style={styleBasedOnType('Home')}>
+            <ListItem button style={styleBasedOnType('Home')}>
                 <ListItemIcon>
                     <HomeWorkIcon color='#cadafa' />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItem> 
-            <ListItem button component={Link} to="/feed" button style={styleBasedOnType('Feed')}>
+        
+            <ListItem button component={Link} to="/profile" button style={styleBasedOnType('Profile')}>
                 <ListItemIcon>
                     <SettingsApplicationsIcon color='#cadafa' />
                 </ListItemIcon> 
                 <ListItemText primary="Profile" />
             </ListItem>
-            <ListItem button component={Link} to="/users" style={styleBasedOnType('Users')}>
-                <ListItemIcon>
-                    <PeopleIcon color='#cadafa' />
-                </ListItemIcon>
-                <ListItemText primary="Users" />
-            </ListItem>
-            <ListItem
-                button
-                onClick={handleClick}
-                style={open ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'inherit' }}
-            >
-                <ListItemIcon>
-                    <ListAltRoundedIcon color='#cadafa' />
-                </ListItemIcon>
-                <ListItemText primary="Feeds" />
-                {open ? <ExpandLess color='#cadafa' /> : <ExpandMore color='#cadafa' />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
-                <ListItem component={Link} to="/jobs" button style={styleBasedOnType('Jobs')}>
+            
+            {UseHasAccessTo(APP_GROUPS.SYSTEM_APP) &&
+                <ListItem button component={Link} to="/users" style={styleBasedOnType('Users')}>
                     <ListItemIcon>
-                        <LibraryAddCheckIcon color='#cadafa' />
+                        <PeopleIcon color='#cadafa' />
                     </ListItemIcon>
-                    <ListItemText primary="Jobs" />
+                    <ListItemText primary="Users" />
                 </ListItem>
-                <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Orgs')}>
+            }
+            
+            {UseHasAccessTo(APP_GROUPS.FEEDS) &&
+            <>
+                <ListItem
+                    button
+                    onClick={handleClick}
+                    style={open ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'inherit' }}
+                >
                     <ListItemIcon>
-                        <PriorityHighIcon color='#cadafa' />
+                            <ListAltRoundedIcon color='#cadafa' />
                     </ListItemIcon>
-                    <ListItemText primary="Organizations" />
-                </ListItem>
-            </Collapse>
+                    <ListItemText primary="Feeds" />
+                    {open ? <ExpandLess color='#cadafa' /> : <ExpandMore color='#cadafa' />}
+               </ListItem>
+                <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
+                    <ListItem component={Link} to="/jobs" button style={styleBasedOnType('Jobs')}>
+                        <ListItemIcon>
+                            <LibraryAddCheckIcon color='#cadafa' />
+                        </ListItemIcon>
+                        <ListItemText primary="Jobs" />
+                    </ListItem>
 
+                    <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Orgs')}>
+                        <ListItemIcon>
+                            <PriorityHighIcon color='#cadafa' />
+                        </ListItemIcon>
+                        <ListItemText primary="Organizations" />
+                    </ListItem>
+                </Collapse>
+            </>
+            }
             <ListItem component={Link} to="/logout" button>
                 <ListItemIcon>
                     <ExitToAppIcon color='#cadafa' />
