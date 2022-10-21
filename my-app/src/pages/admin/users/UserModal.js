@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 //import { createNewUser, UpdateUser } from '../../DataSources/Users';
 import { makeStyles } from 'tss-react/mui';
 import { createNewUser, UpdateUser  } from '../../../API/internal_datasources/Users';
+import USER_ROLES from '../../../config/enums/UserRoles';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
@@ -146,10 +147,13 @@ export default function UserModal({ callback, userDetails }) {
                     fullWidth
                     onChange={(e)=>{setRole(e.target.value)}}
                 >   
-                    <MenuItem value={"DEFAULT"}>Default user</MenuItem>
-                    <MenuItem value={"HR"}>HR manager</MenuItem>
-                    <MenuItem value={"ORG_ADMIN"}>Org Administrator</MenuItem>
-                    <MenuItem value={"SYSADMIN"}>System Administrator</MenuItem>
+                    {
+                    Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole).map(role =>{ 
+                        console.log(role); console.log(USER_ROLES[role]);
+                        return (
+                            <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
+                    )})}
+
                 </Select>
                 </FormControl>
                 {createUser && (
