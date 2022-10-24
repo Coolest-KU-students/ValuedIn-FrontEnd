@@ -14,6 +14,9 @@ import { colors, Modal } from '@mui/material/';/*
 import PasswordChangeModal from '../UserProfile/PasswordChangeModal';
 import Notification from '../../GlobalFeatures/Notification';
 import { ClearAllNotifications } from '../../GlobalFeatures/Notification';*/
+import { useDispatch } from 'react-redux';
+import USER_ROLES from '../../config/enums/UserRoles';
+import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
 //TODO: Get The Logo
 function Image() {
     return <AssignmentIcon fontSize="" />;
@@ -48,16 +51,18 @@ export default function LogIn(props) {
     const [passwordModal, setPasswordModal] = useState(false);
     const setAuthenticated = props.setAuthenticated;
 
+
+
     document.body.style = 'background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);';
 
-    const handleSubmit = (e) => {
+   /* const handleSubmit = (e) => {
         //ClearAllNotifications();
         e.preventDefault();
 
-       /* var credentialsExist = !!email && !!document.getElementById('password').value;
-        credentialsExist ? LoggingInSuccessfully() : Notification('', 'Please Fill In Credentials', 'danger');*/
-        LoggingInSuccessfully()
-    };
+        var credentialsExist = !!email && !!document.getElementById('password').value;
+        credentialsExist ? LoggingInSuccessfully() : Notification('', 'Please Fill In Credentials', 'danger');
+        
+    };*/
 
     const LoggingInSuccessfully = () => {
         //Notification('Logging In', 'Please wait while our system processes the request', 'warning', 2000);
@@ -66,6 +71,13 @@ export default function LogIn(props) {
             password: document.getElementById('password').value,
         });
     };
+
+    const dispatch = useDispatch();
+
+    const ByPassLogin = (userRole) =>{
+        dispatch(AssignRole(userRole));
+        LoggingInSuccessfully();
+    } 
 
     return (
         <div>
@@ -122,9 +134,45 @@ export default function LogIn(props) {
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={handleSubmit}
+                            onClick={() => ByPassLogin(USER_ROLES.GUEST)}
                         >
-                            Log In
+                            Log In as GUEST
+                        </Button> 
+                         <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => ByPassLogin(USER_ROLES.DEFAULT)}
+                        >
+                            Log In as DEFAULT
+                        </Button>
+                         <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => ByPassLogin(USER_ROLES.HR)}
+                        >
+                            Log In as HR
+                        </Button>
+                         <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => ByPassLogin(USER_ROLES.ORG_ADMIN)}
+                        >
+                            Log In as ORG Admin
+                        </Button>
+                         <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => ByPassLogin(USER_ROLES.SYSADMIN)}
+                        >
+                            Log In as SysAdmin
                         </Button>
                         <Grid container>
                             <Grid item xs>

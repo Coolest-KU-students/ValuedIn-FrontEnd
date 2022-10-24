@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import CheckForUserPermissions from '../../config/permissions/RoleAppPermissions';
 import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import JobFeed from '../feeds/jobs/JobFeed';
 import OrganizationFeed from '../feeds/organizations/OrganizationFeed';
 import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
+import { useSelector } from 'react-redux';
+import APP_GROUPS from '../../config/enums/AppGroups';
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(false);
+
+    const userRole = useSelector(state => state.UserRole);
 
 
    /* useEffect(() => {
@@ -33,6 +38,10 @@ const PageRouting = () => {
         setAuthenticated(false);
     };
 
+    const UserHasAccessTo = (accessGroup) =>{
+       return CheckForUserPermissions(userRole, accessGroup);
+    }
+
     /***********
       Navbar Control section
     ***********/
@@ -47,6 +56,7 @@ const PageRouting = () => {
             children: currentNavbarChildren,
         });
     };
+    
 
     /*************/
     return (
@@ -56,30 +66,27 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
-                            <Route exact path="/jobs">
-                            
-                                <MainBodyWrapper>
-                                    <JobFeed AdjustNavbar={AdjustNavbar} />
-                                </MainBodyWrapper>
-                                
-                                {/*   <IssueList AdjustNavbar={AdjustNavbar} />*/}
-                            </Route>
-                            <Route exact path="/issues/:id">
-                                {/* <IssueView AdjustNavbar={AdjustNavbar} />*/}
-                            </Route>
-                            <Route exact path="/organizations">
-                                <MainBodyWrapper>
-                                    <OrganizationFeed AdjustNavbar={AdjustNavbar} />
-                                </MainBodyWrapper>
-                            </Route>
-                            <Route exact path="/users">
-                                <MainBodyWrapper>
-                                    <UsersList AdjustNavbar={AdjustNavbar} />
-                                </MainBodyWrapper>
-                            </Route>
-                            <Route exact path="/importances">
-                                {/*<ImportanceList AdjustNavbar={AdjustNavbar} />*/}
-                            </Route>
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/jobs">
+                                    <MainBodyWrapper>
+                                        <JobFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/organizations">
+                                    <MainBodyWrapper>
+                                        <OrganizationFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.SYSTEM_APP) &&
+                                <Route exact path="/users">
+                                    <MainBodyWrapper>
+                                        <UsersList AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
                             <Route
                                 exact
                                 path="/logout"
@@ -88,7 +95,9 @@ const PageRouting = () => {
                                     return <Redirect exact to="/" />;
                                 }}
                             />
-                            <Redirect exact to="/jobs"/>
+                            
+                            {UserHasAccessTo(APP_GROUPS.JOB_FEED) && <Redirect exact to="/jobs"/>}
+                            {UserHasAccessTo(APP_GROUPS.SYSTEM_APP) && <Redirect exact to="/users"/>}
                         </Switch>
                     </>
                 )}
