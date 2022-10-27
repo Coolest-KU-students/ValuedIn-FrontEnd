@@ -15,6 +15,7 @@ import { makeStyles } from 'tss-react/mui';
 import { ChangeUserExpiration, LoadPaginatedData } from '../../../API/internal_datasources/Users';
 import { UserSidebarTasks } from './UserSidebarTasks';
 import { UserTableHeaderCell } from './UserTableHeaderCell';
+import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -39,7 +40,7 @@ const useStyles = makeStyles()((theme) => ({
     }));
 
 const UsersList = ({ AdjustNavbar }) => {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
     const [column, setColumn] = useState({ name: 'login', ascending: true });
     const [paging, setPaging] = useState({ number: 0, size: 5 });
     const [showExpired, setShowExpired] = useState(false);
@@ -47,7 +48,7 @@ const UsersList = ({ AdjustNavbar }) => {
     const [ModalIsOpen, setModalOpen] = useState(false);
     const [EditIsOpen, setEditIsOpen] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
-
+    const [dataLoaded, setDataLoaded] = useState(false);
     const theme = useSelector((state) => state.Theme);
 
     useEffect(() => {
@@ -73,6 +74,7 @@ const UsersList = ({ AdjustNavbar }) => {
     const DistributeData = (data) => {
         setUsers(data.content);
         setTotal(data.totalElements);
+        setDataLoaded(true);
     };
 
     const SortData = (Column) => {
@@ -142,126 +144,123 @@ const UsersList = ({ AdjustNavbar }) => {
             <Modal open={EditIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} userDetails={currentUser} />
             </Modal>
-            {users ? (
-                    <TableContainer
-                        component={Paper}
-                        style={{ padding: '1rem', paddingBottom: '0px', backgroundColor: theme.tableContainerColor }}
-                    >
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="right" width="20%">
-                                        <Typography>
-                                            <Checkbox
-                                                onChange={() => {
-                                                    setShowExpired(!showExpired);
-                                                }}
-                                            />
-                                            Show&nbsp;Expired
-                                        </Typography>
+            <LoadingWrapper loaded={dataLoaded}>
+                <TableContainer component={Paper}
+                    style={{ padding: '1rem', paddingBottom: '0px', backgroundColor: theme.tableContainerColor }}
+                >
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="right" width="20%">
+                                    <Typography>
+                                        <Checkbox
+                                            onChange={() => {
+                                                setShowExpired(!showExpired);
+                                            }}
+                                        />
+                                        Show&nbsp;Expired
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                    </Table>
+                    <Table>
+                        <TableHead className={classes.TableHead}>
+                            <TableRow>
+                                <TableCell width="5%" />
+                                
+                                <UserTableHeaderCell align="left" width={calculateColumnWidths(0)} 
+                                    name={'Login'} onClick={()=>{SortData('login');}}
+                                    sortAsc={column.name ==='login'?column.ascending : undefined}
+                                />
+                                
+                                <UserTableHeaderCell align="left" width={calculateColumnWidths(1)} 
+                                    name={'Role'} onClick={()=>{SortData('role');}}
+                                    sortAsc={column.name ==='role'?column.ascending : undefined}
+                                />
+                                
+                                <UserTableHeaderCell align="right" width={calculateColumnWidths(2)} 
+                                    name={'Name'} onClick={()=>{SortData('lastName');}}
+                                    sortAsc={column.name ==='lastName'?column.ascending : undefined}
+                                />
+                                    
+                                <UserTableHeaderCell align="center" width={calculateColumnWidths(3)} 
+                                    name={'Last Active'} onClick={()=>{SortData('lastActive');}}
+                                    sortAsc={column.name ==='lastActive'?column.ascending : undefined}
+                                />
+
+                                <UserTableHeaderCell align="center" width={calculateColumnWidths(4)} name={showExpired ? 'RESTORE' : 'EXPIRE'}/>
+                                
+                                <UserTableHeaderCell align="center" width={calculateColumnWidths(5)} name={'EDIT'}/>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users.map((user) => (
+                                <TableRow key={user.login} className={classes.TableRows}>
+                                    <TableCell />
+                                    <TableCell
+                                        align="left"
+                                        className={classes.BodyTableCells}
+                                        style={{ paddingLeft: '2rem ' }}
+                                    >
+                                        {user.login}
+                                    </TableCell>
+
+                                    <TableCell align="left" className={classes.BodyTableCells} 
+                                        style={{ paddingLeft: '2rem ' }}>
+                                        {user.role}
+                                    </TableCell>
+
+                                    <TableCell align="right" className={classes.BodyTableCells}>
+                                        {user.firstName} {user.lastName}
+                                    </TableCell>
+
+                                    <TableCell align="center" className={classes.BodyTableCells}>
+                                        {user.lastActive ? (
+                                            <div>
+                                                {user.lastActive.toString().replace('T', String.fromCharCode(160))}
+                                            </div>
+                                        ) : (
+                                            'No data'
+                                        )}
+                                    </TableCell>
+                                    <TableCell align="center" style={theme.BodyTableCells}>
+                                        <Button
+                                            className={classes.deleteButton}
+                                            onClick={() => {
+                                                ChangeExpiration(user.login);
+                                            }}
+                                        >
+                                            <RemoveCircleOutlineRoundedIcon />
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell align="center" style={theme.BodyTableCells}>
+                                        <Button
+                                            className={classes.deleteButton}
+                                            onClick={() => {
+                                                handleEdit(user);
+                                            }}
+                                        >
+                                            <BorderColorOutlinedIcon />
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
-                            </TableHead>
-                        </Table>
-                        <Table>
-                            <TableHead className={classes.TableHead}>
-                                <TableRow>
-                                    <TableCell width="5%" />
-                                    
-                                    <UserTableHeaderCell align="left" width={calculateColumnWidths(0)} 
-                                        name={'Login'} onClick={()=>{SortData('login');}}
-                                        sortAsc={column.name ==='login'?column.ascending : undefined}
-                                    />
-                                    
-                                    <UserTableHeaderCell align="left" width={calculateColumnWidths(1)} 
-                                        name={'Role'} onClick={()=>{SortData('role');}}
-                                        sortAsc={column.name ==='role'?column.ascending : undefined}
-                                    />
-                                    
-                                    <UserTableHeaderCell align="right" width={calculateColumnWidths(2)} 
-                                        name={'Name'} onClick={()=>{SortData('lastName');}}
-                                        sortAsc={column.name ==='lastName'?column.ascending : undefined}
-                                    />
-                                        
-                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(3)} 
-                                        name={'Last Active'} onClick={()=>{SortData('lastActive');}}
-                                        sortAsc={column.name ==='lastActive'?column.ascending : undefined}
-                                    />
-
-                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(4)} name={showExpired ? 'RESTORE' : 'EXPIRE'}/>
-                                    
-                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(5)} name={'EDIT'}/>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {users.map((user) => (
-                                    <TableRow key={user.login} className={classes.TableRows}>
-                                        <TableCell />
-                                        <TableCell
-                                            align="left"
-                                            className={classes.BodyTableCells}
-                                            style={{ paddingLeft: '2rem ' }}
-                                        >
-                                            {user.login}
-                                        </TableCell>
-
-                                        <TableCell align="left" className={classes.BodyTableCells} 
-                                            style={{ paddingLeft: '2rem ' }}>
-                                            {user.role}
-                                        </TableCell>
-
-                                        <TableCell align="right" className={classes.BodyTableCells}>
-                                            {user.firstName} {user.lastName}
-                                        </TableCell>
-
-                                        <TableCell align="center" className={classes.BodyTableCells}>
-                                            {user.lastActive ? (
-                                                <div>
-                                                    {user.lastActive.toString().replace('T', String.fromCharCode(160))}
-                                                </div>
-                                            ) : (
-                                                'No data'
-                                            )}
-                                        </TableCell>
-                                        <TableCell align="center" style={theme.BodyTableCells}>
-                                            <Button
-                                                className={classes.deleteButton}
-                                                onClick={() => {
-                                                    ChangeExpiration(user.login);
-                                                }}
-                                            >
-                                                <RemoveCircleOutlineRoundedIcon />
-                                            </Button>
-                                        </TableCell>
-                                        <TableCell align="center" style={theme.BodyTableCells}>
-                                            <Button
-                                                className={classes.deleteButton}
-                                                onClick={() => {
-                                                    handleEdit(user);
-                                                }}
-                                            >
-                                                <BorderColorOutlinedIcon />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                <TableRow>
-                                    
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 25]}
-                                    count={Total}
-                                    rowsPerPage={paging.size}
-                                    page={paging.number}
-                                    onPageChange={handlePaging}
-                                    onRowsPerPageChange={handlePageSizing}
-                                />
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-            ) : (
-                <Container>Loading...</Container>
-            )}
+                            ))}
+                            <TableRow>
+                                
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                count={Total}
+                                rowsPerPage={paging.size}
+                                page={paging.number}
+                                onPageChange={handlePaging}
+                                onRowsPerPageChange={handlePageSizing}
+                            />
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </LoadingWrapper>
         </React.Fragment>
     );
 };

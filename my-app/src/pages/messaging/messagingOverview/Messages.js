@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { loadMessageOverviews } from '../../../API/internal_datasources/Messages';
+import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
 import SingleMessageCard from './SingleMessageCard';
 
 const Messages = ({AdjustNavbar}) => {
@@ -29,22 +30,14 @@ const Messages = ({AdjustNavbar}) => {
     };
 
     return  (
-        <>
-        {!initialLoadDone ?
-            <div> 
-                Loading...
-            </div>
-
-            :
+        <LoadingWrapper loaded = {initialLoadDone}>
             <Container>
-                {
-                    messageOverviewData.map(message => 
+                { messageOverviewData.map(message => 
                         <SingleMessageCard messageData={message} />
                     )
                 }
             </Container>
-        }
-        </>
+        </LoadingWrapper>
     ) 
 }
 
