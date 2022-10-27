@@ -6,11 +6,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import Modal from '@mui/material/Modal';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
@@ -18,6 +13,7 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import UserModal from './UserModal';
 import { makeStyles } from 'tss-react/mui';
 import { ChangeUserExpiration, LoadPaginatedData } from '../../../API/internal_datasources/Users';
+import { UserSidebarTasks } from './UserSidebarTasks';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -120,31 +116,17 @@ const UsersList = ({ AdjustNavbar }) => {
         
     };
     
-
+    const userSidebarTasks = () =>{
+        return UserSidebarTasks(handleOpen);
+    }
 
     useEffect(() => {
         const props = {
             PageName: 'Users',
             currentListElement: 'Users',
         };
-        AdjustNavbar(props, () => {
-            return (
-                <div>
-                    <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
-                        Tasks
-                    </ListSubheader>
-                    <ListItem button onClick={handleOpen}>
-                        <ListItemIcon>
-                            <AddBoxIcon color={theme.navbarIcon} />
-                        </ListItemIcon>
-                        <ListItemText primary="Register New" />
-                    </ListItem>
-                </div>
-            );
-        });
+        AdjustNavbar(props, userSidebarTasks);
     }, [theme]);
-    
-    console.log(classes);
 
     return (
         <React.Fragment>
@@ -153,7 +135,7 @@ const UsersList = ({ AdjustNavbar }) => {
             </Modal>
             <Modal open={EditIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} userDetails={currentUser} />
-    </Modal>
+            </Modal>
             {users ? (
                     <TableContainer
                         component={Paper}
