@@ -14,6 +14,7 @@ import UserModal from './UserModal';
 import { makeStyles } from 'tss-react/mui';
 import { ChangeUserExpiration, LoadPaginatedData } from '../../../API/internal_datasources/Users';
 import { UserSidebarTasks } from './UserSidebarTasks';
+import { UserTableHeaderCell } from './UserTableHeaderCell';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -82,6 +83,9 @@ const UsersList = ({ AdjustNavbar }) => {
     const ColumnWidths = [15, 10, 10, 15, 5, 5];
 
     const SumWidths = ColumnWidths.reduce((a, b) => a + b, 0);
+    const calculateColumnWidths = (index) =>{
+        return (100 * ColumnWidths[index]) / SumWidths + '%'
+     }
 
     const { classes } = useStyles();
 
@@ -128,6 +132,8 @@ const UsersList = ({ AdjustNavbar }) => {
         AdjustNavbar(props, userSidebarTasks);
     }, [theme]);
 
+    
+
     return (
         <React.Fragment>
             <Modal open={ModalIsOpen} onClose={handleClose}>
@@ -144,16 +150,16 @@ const UsersList = ({ AdjustNavbar }) => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                <TableCell align="right" width="20%">
-                                    <Typography>
-                                        <Checkbox
-                                            onChange={() => {
-                                                setShowExpired(!showExpired);
-                                            }}
-                                        />
-                                        Show&nbsp;Expired
-                                    </Typography>
-                                </TableCell>
+                                    <TableCell align="right" width="20%">
+                                        <Typography>
+                                            <Checkbox
+                                                onChange={() => {
+                                                    setShowExpired(!showExpired);
+                                                }}
+                                            />
+                                            Show&nbsp;Expired
+                                        </Typography>
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                         </Table>
@@ -161,75 +167,30 @@ const UsersList = ({ AdjustNavbar }) => {
                             <TableHead className={classes.TableHead}>
                                 <TableRow>
                                     <TableCell width="5%" />
-                                    <TableCell align="left" width={(100 * ColumnWidths[0]) / SumWidths + '%'}>
-                                        <Button
-                                            onClick={() => {
-                                                SortData('login');
-                                            }}
-                                        >
-                                            <Typography variant="h6">Login</Typography>
-                                            {column.name === 'login' &&
-                                                (column.ascending ? (
-                                                    <ArrowDownwardIcon className={classes.SortingArrow} />
-                                                ) : (
-                                                    <ArrowUpwardIcon className={classes.SortingArrow} />
-                                                ))}
-                                        </Button>
-                                    </TableCell>
-
-                                    <TableCell align="left" width={(100 * ColumnWidths[1]) / SumWidths + '%'}>
-                                        <Button
-                                            onClick={() => {
-                                                SortData('role');
-                                            }}
-                                        >
-                                            <Typography variant="h6">Role</Typography>
-                                            {column.name === 'role' &&
-                                                (column.ascending ? (
-                                                    <ArrowDownwardIcon className={classes.SortingArrow} />
-                                                ) : (
-                                                    <ArrowUpwardIcon className={classes.SortingArrow} />
-                                                ))}
-                                        </Button>
-                                    </TableCell>
-
-                                    <TableCell align="right" width={(100 * ColumnWidths[2]) / SumWidths + '%'}>
-                                        <Button
-                                            onClick={() => {
-                                                SortData('lastName');
-                                            }}
-                                        >
-                                            <Typography variant="h6">Name</Typography>
-                                            {column.name === 'lastName' &&
-                                                (column.ascending ? (
-                                                    <ArrowDownwardIcon className={classes.SortingArrow} />
-                                                ) : (
-                                                    <ArrowUpwardIcon className={classes.SortingArrow} />
-                                                ))}
-                                        </Button>
-                                    </TableCell>
+                                    
+                                    <UserTableHeaderCell align="left" width={calculateColumnWidths(0)} 
+                                        name={'Login'} onClick={()=>{SortData('login');}}
+                                        sortAsc={column.name ==='login'?column.ascending : undefined}
+                                    />
+                                    
+                                    <UserTableHeaderCell align="left" width={calculateColumnWidths(1)} 
+                                        name={'Role'} onClick={()=>{SortData('role');}}
+                                        sortAsc={column.name ==='role'?column.ascending : undefined}
+                                    />
+                                    
+                                    <UserTableHeaderCell align="right" width={calculateColumnWidths(2)} 
+                                        name={'Name'} onClick={()=>{SortData('lastName');}}
+                                        sortAsc={column.name ==='lastName'?column.ascending : undefined}
+                                    />
                                         
-                                    <TableCell align="center" width={(100 * ColumnWidths[3]) / SumWidths + '%'}>
-                                        <Button
-                                            onClick={() => {
-                                                SortData('lastActive');
-                                            }}
-                                        >
-                                            <Typography variant="h6">Last Active</Typography>
-                                            {column.name === 'lastActive' &&
-                                                (column.ascending ? (
-                                                    <ArrowDownwardIcon className={classes.SortingArrow} />
-                                                ) : (
-                                                    <ArrowUpwardIcon className={classes.SortingArrow} />
-                                                ))}
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell align="center" width={(100 * ColumnWidths[4]) / SumWidths + '%'}>
-                                        <Typography variant="h6">{showExpired ? 'RESTORE' : 'EXPIRE'}</Typography>
-                                    </TableCell>
-                                    <TableCell align="center" width={(100 * ColumnWidths[5]) / SumWidths + '%'}>
-                                        <Typography variant="h6">EDIT</Typography>
-                                    </TableCell>
+                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(3)} 
+                                        name={'Last Active'} onClick={()=>{SortData('lastActive');}}
+                                        sortAsc={column.name ==='lastActive'?column.ascending : undefined}
+                                    />
+
+                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(4)} name={showExpired ? 'RESTORE' : 'EXPIRE'}/>
+                                    
+                                    <UserTableHeaderCell align="center" width={calculateColumnWidths(5)} name={'EDIT'}/>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -293,7 +254,7 @@ const UsersList = ({ AdjustNavbar }) => {
                                     page={paging.number}
                                     onPageChange={handlePaging}
                                     onRowsPerPageChange={handlePageSizing}
-                                />  
+                                />
                                 </TableRow>
                             </TableBody>
                         </Table>
