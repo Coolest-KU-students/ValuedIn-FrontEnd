@@ -1,7 +1,9 @@
 import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
-import { loadMessageHistory } from '../../../API/internal_datasources/Messages';
+import { loadMessageHistory, sendNewMessage } from '../../../API/internal_datasources/Messages';
+import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
+import { NewMessage } from './NewMessage';
 import { SingleMessage } from './SingleMessage';
 
 export const MessageHistoryTrail = () => {
@@ -21,25 +23,23 @@ export const MessageHistoryTrail = () => {
 
     const LoadData = (data) =>{
         setMessages(data);
-        console.log(messages);
         setInitialLoadDone(true);
     };
+
+    const sendMessage = (messageContent) =>{
+        sendNewMessage(id, messageContent, ()=>{});
+    }
     
     return (
-        <>
-        {!initialLoadDone ?
-            <div> 
-                Loading...
-            </div>
-            :
+        <LoadingWrapper loaded={initialLoadDone}>
             <Container>
+                <NewMessage onSend={sendMessage} />
                 {
                     messages.map(message => 
                         <SingleMessage message={message} />
                     )
                 }
             </Container>
-        }
-        </>
+        </LoadingWrapper>
     )
 }

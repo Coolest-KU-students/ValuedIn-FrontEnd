@@ -16,6 +16,7 @@ import { ChangeUserExpiration, LoadPaginatedData } from '../../../API/internal_d
 import { UserSidebarTasks } from './UserSidebarTasks';
 import { UserTableHeaderCell } from './UserTableHeaderCell';
 import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
+import { InteractionModalWrapper } from '../../global/wrappers/InteractionModalWrapper';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -134,16 +135,14 @@ const UsersList = ({ AdjustNavbar }) => {
         AdjustNavbar(props, userSidebarTasks);
     }, [theme]);
 
-    
-
     return (
         <React.Fragment>
-            <Modal open={ModalIsOpen} onClose={handleClose}>
+            <InteractionModalWrapper open={ModalIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} />
-            </Modal>
-            <Modal open={EditIsOpen} onClose={handleClose}>
+            </InteractionModalWrapper>
+            <InteractionModalWrapper open={EditIsOpen} onClose={handleClose}>
                 <UserModal callback={callbackModal} userDetails={currentUser} />
-            </Modal>
+            </InteractionModalWrapper>
             <LoadingWrapper loaded={dataLoaded}>
                 <TableContainer component={Paper}
                     style={{ padding: '1rem', paddingBottom: '0px', backgroundColor: theme.tableContainerColor }}
@@ -266,37 +265,3 @@ const UsersList = ({ AdjustNavbar }) => {
 };
 
 export default UsersList;
-/*
-const LoadPaginatedData = (setData, configuration) => {
-    setData(getMockData(configuration));
-};
-
-const getMockData = (configuration) => {
-    console.log(configuration);
-    return {
-        content: [
-            { login: 'Lukas', role: 'Admin', firstName: 'Lu', lastName: 'Kas', lastActive: '1999/05/26' },
-            { login: 'Luknas', role: 'HR', firstName: 'Luk', lastName: 'Nas', lastActive: '1999/06/26' },
-            { login: 'Lignas', role: 'Regular', firstName: 'Lig', lastName: 'Nas', lastActive: '1999/07/26' },
-            { login: 'Ignas', role: 'SysAdmin', firstName: 'Ig', lastName: 'Nas', lastActive: '1999/08/26' },
-        ],
-        pageable: {
-            sort: { sorted: true, unsorted: false, empty: false },
-            offset: 0,
-            pageNumber: 0,
-            pageSize: 10,
-            paged: true,
-            unpaged: false,
-        },
-        last: true,
-        totalElements: 4,
-        totalPages: 1,
-        size: 10,
-        sort: { sorted: true, unsorted: false, empty: false },
-        first: true,
-        numberOfElements: 4,
-        number: 0,
-        empty: false,
-    };
-};*/
-

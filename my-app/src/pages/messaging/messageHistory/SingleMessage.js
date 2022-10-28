@@ -1,5 +1,5 @@
 import { Card, Divider, Paper, Typography } from '@mui/material';
-import React from 'react'
+import React from 'react';
 
 export const SingleMessage = ({message}) => {
 

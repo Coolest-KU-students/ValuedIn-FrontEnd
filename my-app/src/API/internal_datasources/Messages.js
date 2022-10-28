@@ -37,6 +37,11 @@ const MockedMessageHistory = [
 ]
 
 
+export const sendNewMessage=(chatId, content, callback)=>{
+    console.log("New message sent", chatId, content);
+    callback();
+}
+
 export const loadMessageOverviews = (dataCallback) => {
     setTimeout(()=>{dataCallback(MockedData)}, 300);
 }
