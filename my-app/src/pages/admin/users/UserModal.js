@@ -10,15 +10,10 @@ import USER_ROLES from '../../../config/enums/UserRoles';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
-        position: 'absolute',
-        width: '33%',
-        marginLeft: '34%',
         [theme.breakpoints.down('sm')]: {
             width: '95%',
             marginLeft: '2.5%',
         },
-
-        marginTop: '10%',
     },
 }));
 
@@ -74,7 +69,6 @@ export default function UserModal({ callback, userDetails }) {
     };
 
     const updateCurrent = () => {
-        
         UpdateUser(
             {
                 firstName: fullName.firstName,
@@ -137,24 +131,24 @@ export default function UserModal({ callback, userDetails }) {
                     onChange={setLastName}
                 />
                 <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                <Select
-                    id="demo-simple-select" 
-                    value={role}
-                    label="Role"
-                    style={{ margin: 8 }}
-                    defaultValue={"DEFAULT"}
-                    fullWidth
-                    onChange={(e)=>{setRole(e.target.value)}}
-                >   
-                    {
-                    Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole).map(role =>{ 
-                        console.log(role); console.log(USER_ROLES[role]);
-                        return (
-                            <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
-                    )})}
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                        id="demo-simple-select" 
+                        value={role}
+                        label="Role"
+                        style={{ margin: 8 }}
+                        defaultValue={"DEFAULT"}
+                        fullWidth
+                        onChange={(e)=>{setRole(e.target.value)}}
+                    >   
+                        {
+                        Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole).map(role =>{ 
+                            console.log(role); console.log(USER_ROLES[role]);
+                            return (
+                                <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
+                        )})}
 
-                </Select>
+                    </Select>
                 </FormControl>
                 {createUser && (
                     <>

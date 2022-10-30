@@ -8,7 +8,6 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { Link } from 'react-router-dom';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
@@ -18,6 +17,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CheckForUserPermissions from '../../../config/permissions/RoleAppPermissions';
 import APP_GROUPS from '../../../config/enums/AppGroups';
+import CommentIcon from '@mui/icons-material/Comment';
+import { SidebarButtonListItem } from './SidebarButtons';
 
 export default function NavigationButtons(props) {
     const [open, setOpen] = useState(false);
@@ -46,65 +47,39 @@ export default function NavigationButtons(props) {
             <ListSubheader inset style={{ backgroundColor: 'inherit', color: 'inherit' }}>
                 Navigation
             </ListSubheader>
-            <ListItem button style={styleBasedOnType('Home')}>
-                <ListItemIcon>
-                    <HomeWorkIcon color='#cadafa' />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-            </ListItem> 
-        
-            <ListItem button component={Link} to="/profile" button style={styleBasedOnType('Profile')}>
-                <ListItemIcon>
-                    <SettingsApplicationsIcon color='#cadafa' />
-                </ListItemIcon> 
-                <ListItemText primary="Profile" />
-            </ListItem>
+
+            <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  icon={<HomeWorkIcon />} />
+
+            <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profile" icon={<SettingsApplicationsIcon />} />
             
+            {UseHasAccessTo(APP_GROUPS.CHATBOX) &&
+                <SidebarButtonListItem text="Messages" style={styleBasedOnType('Messages')} linkTo="/messages" icon={<CommentIcon />} />
+            }
+
             {UseHasAccessTo(APP_GROUPS.SYSTEM_APP) &&
-                <ListItem button component={Link} to="/users" style={styleBasedOnType('Users')}>
-                    <ListItemIcon>
-                        <PeopleIcon color='#cadafa' />
-                    </ListItemIcon>
-                    <ListItemText primary="Users" />
-                </ListItem>
+                <SidebarButtonListItem text="Users" style={styleBasedOnType('Users')} linkTo="/users" icon={<PeopleIcon />} />
             }
             
             {UseHasAccessTo(APP_GROUPS.FEEDS) &&
             <>
-                <ListItem
-                    button
-                    onClick={handleClick}
+                <ListItem button onClick={handleClick}
                     style={open ? { backgroundColor: 'lightgrey' } : { backgroundColor: 'inherit' }}
                 >
                     <ListItemIcon>
-                            <ListAltRoundedIcon color='#cadafa' />
+                            <ListAltRoundedIcon  />
                     </ListItemIcon>
                     <ListItemText primary="Feeds" />
-                    {open ? <ExpandLess color='#cadafa' /> : <ExpandMore color='#cadafa' />}
+                    {open ? <ExpandLess/> : <ExpandMore/>}
                </ListItem>
-                <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
-                    <ListItem component={Link} to="/jobs" button style={styleBasedOnType('Jobs')}>
-                        <ListItemIcon>
-                            <LibraryAddCheckIcon color='#cadafa' />
-                        </ListItemIcon>
-                        <ListItemText primary="Jobs" />
-                    </ListItem>
 
-                    <ListItem component={Link} to="/organizations" button style={styleBasedOnType('Orgs')}>
-                        <ListItemIcon>
-                            <PriorityHighIcon color='#cadafa' />
-                        </ListItemIcon>
-                        <ListItemText primary="Organizations" />
-                    </ListItem>
+                <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
+                    <SidebarButtonListItem text="Jobs" style={styleBasedOnType('Jobs')} linkTo="/jobs" icon={<LibraryAddCheckIcon />} />
+                    
+                    <SidebarButtonListItem text="Organizations" style={styleBasedOnType('Orgs')} linkTo="/organizations" icon={<PriorityHighIcon />} />
                 </Collapse>
             </>
             }
-            <ListItem component={Link} to="/logout" button>
-                <ListItemIcon>
-                    <ExitToAppIcon color='#cadafa' />
-                </ListItemIcon>
-                <ListItemText primary="Log Out" />
-            </ListItem>
+            <SidebarButtonListItem text="Log Out" linkTo="/logout" icon={<ExitToAppIcon />} />
         </div>
     );
 }

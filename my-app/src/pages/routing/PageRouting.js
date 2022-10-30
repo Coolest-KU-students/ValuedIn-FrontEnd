@@ -9,6 +9,8 @@ import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
 import { useSelector } from 'react-redux';
 import APP_GROUPS from '../../config/enums/AppGroups';
+import Messages from '../messaging/messagingOverview/Messages';
+import { MessageHistoryTrail } from '../messaging/messageHistory/MessageHistoryTrail';
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(false);
@@ -84,6 +86,19 @@ const PageRouting = () => {
                                 <Route exact path="/users">
                                     <MainBodyWrapper>
                                         <UsersList AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.CHATBOX) &&
+                                <Route exact path="/messages">
+                                    <MainBodyWrapper>
+                                        <Messages AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }{UserHasAccessTo(APP_GROUPS.CHATBOX) &&
+                                <Route exact path="/messages/:id">
+                                    <MainBodyWrapper>
+                                        <MessageHistoryTrail AdjustNavbar={AdjustNavbar} />
                                     </MainBodyWrapper>
                                 </Route>
                             }
