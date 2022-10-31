@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import APP_GROUPS from '../../config/enums/AppGroups';
 import Messages from '../messaging/messagingOverview/Messages';
 import { MessageHistoryTrail } from '../messaging/messageHistory/MessageHistoryTrail';
+import { ToastWrapper } from '../global/notifications/ToastWrapper';
+import { toast } from 'react-toastify';
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(false);
@@ -31,12 +33,17 @@ const PageRouting = () => {
         setAuthenticated(true);
     };*/
 
+
+    
+
     const AuthenticateUser = (credentials) => {
+        ToastWrapper().success("Successfully logged in");
         setAuthenticated(true);
     };
 
     const LogOut = () => {
         //CleanJWTToken();
+        ToastWrapper().success("Logged Out!");
         setAuthenticated(false);
     };
 

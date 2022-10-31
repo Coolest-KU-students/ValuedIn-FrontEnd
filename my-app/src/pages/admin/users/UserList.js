@@ -17,6 +17,7 @@ import { UserSidebarTasks } from './UserSidebarTasks';
 import { UserTableHeaderCell } from './UserTableHeaderCell';
 import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
 import { InteractionModalWrapper } from '../../global/wrappers/InteractionModalWrapper';
+import { ToastWrapper } from '../../global/notifications/ToastWrapper';
 
 const drawerWidth = 240;
 const useStyles = makeStyles()((theme) => ({
@@ -52,17 +53,31 @@ const UsersList = ({ AdjustNavbar }) => {
     const [dataLoaded, setDataLoaded] = useState(false);
     const theme = useSelector((state) => state.Theme);
 
+    const toastId = "userList";
+    const toastWrapper = ToastWrapper({toastId: toastId});
+
     useEffect(() => {
         DataReload();
-    }, [column, showExpired, paging]);
-    /*Users JSON:
-    {   Login,
-        FirstName,
-        LastName,
-        LastActive
-    }*/
+    }, [column, paging, showExpired]);
+
+    useEffect(() => {
+        const props = {
+            PageName: 'Users',
+            currentListElement: 'Users',
+        };
+        AdjustNavbar(props, userSidebarTasks);
+    }, [theme]);
+    
+    const popLoadingToast = () =>{
+        toastWrapper.default("Loading data...");
+    }
+
+    const closeToast = () =>{
+        toastWrapper.close(toastId);
+    }
 
     const DataReload = () => {
+        popLoadingToast();
         LoadPaginatedData(DistributeData, {
             showExpired: showExpired,
             page: paging.number,
@@ -73,12 +88,15 @@ const UsersList = ({ AdjustNavbar }) => {
     };
 
     const DistributeData = (data) => {
+        closeToast()
         setUsers(data.content);
         setTotal(data.totalElements);
         setDataLoaded(true);
     };
 
     const SortData = (Column) => {
+        if(Column == "Login") console.error();
+
         if (column.name === Column) setColumn({ name: column.name, ascending: !column.ascending });
         else setColumn({ name: Column, ascending: true });
     };
@@ -119,21 +137,12 @@ const UsersList = ({ AdjustNavbar }) => {
     };
 
     const ChangeExpiration = (login) => {
-        ChangeUserExpiration(login, DataReload);
-        
+        ChangeUserExpiration(login, DataReload);  
     };
     
     const userSidebarTasks = () =>{
         return UserSidebarTasks(handleOpen);
     }
-
-    useEffect(() => {
-        const props = {
-            PageName: 'Users',
-            currentListElement: 'Users',
-        };
-        AdjustNavbar(props, userSidebarTasks);
-    }, [theme]);
 
     return (
         <React.Fragment>
