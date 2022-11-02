@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Button, Checkbox, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material/';
 import SaveIcon from '@mui/icons-material/Save';
 import CircularProgress from '@mui/material/CircularProgress';
-//import Notification from '../../GlobalFeatures/Notification';
-//import { createNewUser, UpdateUser } from '../../DataSources/Users';
 import { makeStyles } from 'tss-react/mui';
 import { createNewUser, UpdateUser  } from '../../../API/internal_datasources/Users';
 import USER_ROLES from '../../../config/enums/UserRoles';
+import { ToastWrapper } from '../../global/notifications/ToastWrapper';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
@@ -33,6 +32,10 @@ export default function UserModal({ callback, userDetails }) {
     const [password, setPassword] = useState(userDetails.password);
     const [role, setRole] = useState(userDetails.role);
     const [requirePasswordChange, setRequirePasswordChange] = useState(false);
+    const [toast, setToast] = useState();
+    const [systemRoles] = useState(Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole));
+    const [toastWrapper] = useState(ToastWrapper());
+
 
     const handleLoad = () => {
         setSavingProgess(true);
@@ -48,11 +51,29 @@ export default function UserModal({ callback, userDetails }) {
             }
         }
 
-       // Notification('', 'Please fill in all fields', 'warning', 2000);
+        popErrorToast();
         setSavingProgess(false);
     };
 
+    const closeToastIfOpen = () => {
+        console.log(toastWrapper.close(toast));
+        if(toastWrapper.exists(toast)) 
+            toastWrapper.close(toast);
+            
+    }
+
+    const popSavingToast = () =>{
+        closeToastIfOpen();
+        setToast(toastWrapper.success(" Saving... "));
+    }
+
+    const popErrorToast = () =>{
+        closeToastIfOpen();
+        setToast(toastWrapper.error("Please fill in all fields"));
+    }
+
     const createNew = () => {
+        popSavingToast();
         createNewUser(
             {
                 firstName: fullName.firstName,
@@ -60,15 +81,13 @@ export default function UserModal({ callback, userDetails }) {
                 role: role, 
                 login: login,
                 password: password,
-                //changePasswordOnLogin: requirePasswordChange,
             },
             Callback
         );
-        //setTimeout(800, Callback); //fake saving
-
     };
 
     const updateCurrent = () => {
+        popSavingToast();
         UpdateUser(
             {
                 firstName: fullName.firstName,
@@ -78,7 +97,6 @@ export default function UserModal({ callback, userDetails }) {
             },
             Callback
         );
-        //setTimeout(800, Callback); //fake saving
     };
 
     const Callback = () => {
@@ -142,8 +160,7 @@ export default function UserModal({ callback, userDetails }) {
                         onChange={(e)=>{setRole(e.target.value)}}
                     >   
                         {
-                        Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole).map(role =>{ 
-                            console.log(role); console.log(USER_ROLES[role]);
+                        systemRoles.map(role =>{ 
                             return (
                                 <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
                         )})}

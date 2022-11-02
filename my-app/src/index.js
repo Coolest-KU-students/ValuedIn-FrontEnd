@@ -13,12 +13,11 @@ const store = createStore(
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+//Strict Mode removed since it causes 2 renders of elements
 root.render(
-  <React.StrictMode>
-  <Provider store={store}>
-    <App />
+    <Provider store={store}>
+      <App />
     </Provider>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
