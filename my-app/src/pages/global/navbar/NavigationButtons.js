@@ -50,8 +50,10 @@ export default function NavigationButtons(props) {
 
             <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  icon={<HomeWorkIcon />} />
 
-            <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profile" icon={<SettingsApplicationsIcon />} />
-            
+            {UseHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
+                <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profiles" icon={<SettingsApplicationsIcon />} />
+            }
+
             {UseHasAccessTo(APP_GROUPS.CHATBOX) &&
                 <SidebarButtonListItem text="Messages" style={styleBasedOnType('Messages')} linkTo="/messages" icon={<CommentIcon />} />
             }

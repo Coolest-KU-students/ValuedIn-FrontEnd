@@ -11,8 +11,10 @@ import { useSelector } from 'react-redux';
 import APP_GROUPS from '../../config/enums/AppGroups';
 import Messages from '../messaging/messagingOverview/Messages';
 import { MessageHistoryTrail } from '../messaging/messageHistory/MessageHistoryTrail';
+import UserProfile from '../profiles/UserProfile';
 import { ToastWrapper } from '../global/notifications/ToastWrapper';
 import { toast } from 'react-toastify';
+
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(false);
@@ -75,6 +77,13 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
+                        {UserHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
+                                <Route exact path="/profiles">
+                                    <MainBodyWrapper>
+                                        <UserProfile AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
                             {UserHasAccessTo(APP_GROUPS.FEEDS) &&
                                 <Route exact path="/jobs">
                                     <MainBodyWrapper>
