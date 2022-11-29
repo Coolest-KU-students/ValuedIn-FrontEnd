@@ -13,6 +13,7 @@ import Messages from '../messaging/messagingOverview/Messages';
 import { MessageHistoryTrail } from '../messaging/messageHistory/MessageHistoryTrail';
 import UserProfile from '../profiles/UserProfile';
 import OrganizationProfile from '../profiles/OrganizationProfile';
+import HRProfile from '../profiles/HRProfile';
 import { ToastWrapper } from '../global/notifications/ToastWrapper';
 import { toast } from 'react-toastify';
 
@@ -89,6 +90,13 @@ const PageRouting = () => {
                                 <Route exact path="/organizations">
                                     <MainBodyWrapper>
                                         <OrganizationProfile AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.JOB_POSTING) &&
+                                <Route exact path="/hrprofiles">
+                                    <MainBodyWrapper>
+                                        <HRProfile AdjustNavbar={AdjustNavbar} />
                                     </MainBodyWrapper>
                                 </Route>
                             }

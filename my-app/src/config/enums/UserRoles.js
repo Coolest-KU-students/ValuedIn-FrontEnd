@@ -10,7 +10,7 @@ const USER_ROLES = {
         systemRole: true,
         systemName: "HR",
         userFriendlyName: "HR Manager",
-        inheritedRoles: ["DEFAULT"]
+        inheritedRoles: ["GUEST"]
     },
     ORG_ADMIN: {
         systemRole: true,

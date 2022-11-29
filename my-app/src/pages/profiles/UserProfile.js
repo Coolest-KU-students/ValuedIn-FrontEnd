@@ -10,7 +10,7 @@ import MichaelScott from './../../public/MichaelScott.avif'
 import Banner1 from './../../public/Banner1.webp'
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
-import { NewChatModal } from '../messaging/messagingOverview/NewChatModal';
+import { ValuesModal } from './ValuesModal';
 import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
 function UserProfile({AdjustNavbar}) {
 
@@ -42,7 +42,7 @@ function UserProfile({AdjustNavbar}) {
         return (
   <Grid container spacing={2}>
     <InteractionModalWrapper open={newChatModal}>
-                <NewChatModal callback={value=>{addNewValue(value); setnewChatModal(false)}} />
+                <ValuesModal callback={value=>{addNewValue(value); setnewChatModal(false)}} />
             </InteractionModalWrapper>
     <Grid item xs={12}>
     <img src={Banner1} alt="Logo" width="1230px" height="250px" style={{alignSelf: 'center'}}/>
@@ -70,8 +70,13 @@ function UserProfile({AdjustNavbar}) {
       <Divider/>
       <Typography variant="body1" color="text.secondary">Field of work: Paper management</Typography>
       <Typography variant="body1" color="text.secondary">Duration: 20 years</Typography>
-      <Typography variant="body1" color="text.secondary">Skills: funny, loyal, honest </Typography>
+      <Typography variant="body1" color="text.secondary">Skills: sales, management </Typography>
     </Stack>
+      <Typography>
+    <IconButton>
+      <Edit sx={{ fontSize: 14 }} />
+    </IconButton>
+    </Typography>
     </Item>
   </Grid>
   <Grid item xs={4}>
@@ -79,7 +84,7 @@ function UserProfile({AdjustNavbar}) {
     <Stack spacing={1}>
       <Typography  variant="h3" fontWeight={700}>
         Values
-        <Button onClick={()=>{setnewChatModal(true)}}>+</Button>
+        <Button onClick={()=>{setnewChatModal(true)}}>Add</Button>
         </Typography>
       <Divider/>
       {
@@ -88,13 +93,6 @@ function UserProfile({AdjustNavbar}) {
           <Typography variant="body1" color="text.secondary">{value}</Typography>
         )
       }
-
-      <Typography variant="body1" color="text.secondary">Value</Typography>
-      <Typography variant="body1" color="text.secondary">Value</Typography>
-      <Typography variant="body1" color="text.secondary">Value</Typography>
-      <Typography variant="body1" color="text.secondary">Value</Typography>
-      <Typography variant="body1" color="text.secondary">Value</Typography>
-      <Typography variant="body1" color="text.secondary">Value</Typography>
     </Stack>
     </Item>
   </Grid>
@@ -116,7 +114,7 @@ function UserProfile({AdjustNavbar}) {
 
 
 const getValues = () =>{
-  return ["honest", "loyal", "gracious", "hard working"];
+  return ["Honesty", "Loyalty", "Sense of humour"];
 }
 
 
