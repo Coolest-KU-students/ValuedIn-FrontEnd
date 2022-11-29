@@ -20,15 +20,18 @@ const PageRouting = () => {
     const userRole = useSelector(state => state.UserRole);
 
 
-   /* useEffect(() => {
-        CheckJWTIsValid(SetLoadedAndAuthenticated);
+    useEffect(() => {
+        checkJWTValidity(SetLoadedAndAuthenticated, setLoaded);
     }, []);
-*/
-    /*const SetLoadedAndAuthenticated = (auth) => {
+
+    const SetLoadedAndAuthenticated = (auth) => {
         setAuthenticated(auth);
         setLoaded(true);
     };
-*/
+
+
+
+
    /* const AuthenticationCallback = () => {
         setAuthenticated(true);
     };*/
@@ -37,6 +40,8 @@ const PageRouting = () => {
     
 
     const AuthenticateUser = (credentials) => {
+        ToastWrapper("Logging In").default("Logging In...")
+
         ToastWrapper().success("Successfully logged in");
         setAuthenticated(true);
     };

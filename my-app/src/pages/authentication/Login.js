@@ -23,7 +23,6 @@ export default function LogIn(props) {
     const [password, setPassword] = useState('');
 
     //TODO: Enhance Modal popup when correct auth error measures are taken
-    const [passwordModal, setPasswordModal] = useState(false);
     const setAuthenticated = props.setAuthenticated;
 
     document.body.style = 'background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);';
