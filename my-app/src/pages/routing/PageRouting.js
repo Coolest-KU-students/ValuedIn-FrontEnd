@@ -12,6 +12,7 @@ import APP_GROUPS from '../../config/enums/AppGroups';
 import Messages from '../messaging/messagingOverview/Messages';
 import { MessageHistoryTrail } from '../messaging/messageHistory/MessageHistoryTrail';
 import UserProfile from '../profiles/UserProfile';
+import OrganizationProfile from '../profiles/OrganizationProfile';
 import { ToastWrapper } from '../global/notifications/ToastWrapper';
 import { toast } from 'react-toastify';
 
@@ -81,6 +82,13 @@ const PageRouting = () => {
                                 <Route exact path="/profiles">
                                     <MainBodyWrapper>
                                         <UserProfile AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                             {UserHasAccessTo(APP_GROUPS.ORGANIZATION_EDITING) &&
+                                <Route exact path="/organizations">
+                                    <MainBodyWrapper>
+                                        <OrganizationProfile AdjustNavbar={AdjustNavbar} />
                                     </MainBodyWrapper>
                                 </Route>
                             }

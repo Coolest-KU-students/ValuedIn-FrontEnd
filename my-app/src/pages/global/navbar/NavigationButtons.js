@@ -61,6 +61,10 @@ export default function NavigationButtons(props) {
             {UseHasAccessTo(APP_GROUPS.SYSTEM_APP) &&
                 <SidebarButtonListItem text="Users" style={styleBasedOnType('Users')} linkTo="/users" icon={<PeopleIcon />} />
             }
+
+             {UseHasAccessTo(APP_GROUPS.ORGANIZATION_EDITING) &&
+                <SidebarButtonListItem text="Organization Profile" style={styleBasedOnType('Organization Profile')} linkTo="/organizations" icon={<SettingsApplicationsIcon />} />
+            }
             
             {UseHasAccessTo(APP_GROUPS.FEEDS) &&
             <>
