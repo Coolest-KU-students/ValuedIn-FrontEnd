@@ -1,22 +1,27 @@
-import {Typography, Avatar, Stack, IconButton, Paper, Grid, Divider} from '@mui/material'
+import {Typography, Avatar, Stack, IconButton, Paper, Grid, Divider, Button} from '@mui/material'
 import LocationOn from '@mui/icons-material/LocationOn';
 import Facebook from '@mui/icons-material/Facebook';
 import Instagram from '@mui/icons-material/Instagram';
 import LinkedIn from '@mui/icons-material/LinkedIn';
 import Youtube from '@mui/icons-material/YouTube';
 import Edit from '@mui/icons-material/Edit';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MichaelScott from './../../public/MichaelScott.avif'
 import Banner1 from './../../public/Banner1.webp'
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
+import { NewChatModal } from '../messaging/messagingOverview/NewChatModal';
+import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
 function UserProfile({AdjustNavbar}) {
+
+  const [values, setValues] = useState(getValues()); 
 
     useEffect(() => {
         const props = {
             PageName: 'User Profile',
         };
-        AdjustNavbar(props, () => {});});
+        AdjustNavbar(props, () => {});}
+        , []);
 
         const Item = styled(Paper)(({ theme }) => ({
           backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -26,9 +31,19 @@ function UserProfile({AdjustNavbar}) {
           color: theme.palette.text.secondary,
           height: 300
         }));
-        
+
+        const addNewValue = (newValue) =>{
+          setValues([newValue, ...values]);
+        }
+
+        const [newChatModal, setnewChatModal] = useState(false);
+
+
         return (
   <Grid container spacing={2}>
+    <InteractionModalWrapper open={newChatModal}>
+                <NewChatModal callback={value=>{addNewValue(value); setnewChatModal(false)}} />
+            </InteractionModalWrapper>
     <Grid item xs={12}>
     <img src={Banner1} alt="Logo" width="1230px" height="250px" style={{alignSelf: 'center'}}/>
   </Grid>
@@ -62,8 +77,18 @@ function UserProfile({AdjustNavbar}) {
   <Grid item xs={4}>
     <Item>
     <Stack spacing={1}>
-      <Typography  variant="h3" fontWeight={700}>Values</Typography>
+      <Typography  variant="h3" fontWeight={700}>
+        Values
+        <Button onClick={()=>{setnewChatModal(true)}}>+</Button>
+        </Typography>
       <Divider/>
+      {
+        values.map(
+          value => 
+          <Typography variant="body1" color="text.secondary">{value}</Typography>
+        )
+      }
+
       <Typography variant="body1" color="text.secondary">Value</Typography>
       <Typography variant="body1" color="text.secondary">Value</Typography>
       <Typography variant="body1" color="text.secondary">Value</Typography>
@@ -87,7 +112,11 @@ function UserProfile({AdjustNavbar}) {
 </Grid>
           )
     
-       
+    }       
+
+
+const getValues = () =>{
+  return ["honest", "loyal", "gracious", "hard working"];
 }
 
 
