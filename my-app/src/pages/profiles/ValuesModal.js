@@ -509,7 +509,7 @@ export const ValuesModal = ({callback}) => {
     return (
         <Paper style={{padding:"20px"}}>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Choose User</InputLabel>
+                <InputLabel id="demo-simple-select-label">Choose Value</InputLabel>
                 <Select
                     id="demo-simple-select" 
                     label="User"
