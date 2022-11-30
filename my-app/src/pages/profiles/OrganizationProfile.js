@@ -49,6 +49,9 @@ function OrganizationProfile({AdjustNavbar}) {
       <Typography variant="body1" color="text.secondary">
       <LocationOn sx={{color: grey[500]}} /> Scranton, PA
       </Typography>
+      <Typography variant="body1" color="text.secondary">
+       Match: 63%
+      </Typography>
       <Divider/>
       <Typography  variant="body1" color="text.secondary">  Paper and office supplies wholesale company.</Typography>
       <Typography  variant="body1" color="text.secondary">  	Headquarters: New York City</Typography>
