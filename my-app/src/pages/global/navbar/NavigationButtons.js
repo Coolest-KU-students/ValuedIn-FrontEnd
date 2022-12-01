@@ -50,14 +50,24 @@ export default function NavigationButtons(props) {
 
             <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  icon={<HomeWorkIcon />} />
 
-            <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profile" icon={<SettingsApplicationsIcon />} />
-            
+            {UseHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
+                <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profiles" icon={<SettingsApplicationsIcon />} />
+            }
+
             {UseHasAccessTo(APP_GROUPS.CHATBOX) &&
                 <SidebarButtonListItem text="Messages" style={styleBasedOnType('Messages')} linkTo="/messages" icon={<CommentIcon />} />
             }
 
             {UseHasAccessTo(APP_GROUPS.SYSTEM_APP) &&
                 <SidebarButtonListItem text="Users" style={styleBasedOnType('Users')} linkTo="/users" icon={<PeopleIcon />} />
+            }
+
+             {UseHasAccessTo(APP_GROUPS.ORGANIZATION_EDITING) &&
+                <SidebarButtonListItem text="Organization Profile" style={styleBasedOnType('Organization Profile')} linkTo="/organizations" icon={<SettingsApplicationsIcon />} />
+            }
+
+            {UseHasAccessTo(APP_GROUPS.JOB_POSTING) &&
+                <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/hrprofiles" icon={<SettingsApplicationsIcon />} />
             }
             
             {UseHasAccessTo(APP_GROUPS.FEEDS) &&
