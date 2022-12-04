@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';  
 import { useDispatch } from 'react-redux';
 import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
+import { ToastWrapper } from '../global/notifications/ToastWrapper';
+import UserModal from '../admin/users/UserModal';
+import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
 
 //TODO: Get The Logo
 function Image() {
@@ -20,7 +23,7 @@ function Image() {
 export default function LogIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [showRegistrationModal, setShowRegistrationModal] = useState(false);
     //TODO: Enhance Modal popup when correct auth error measures are taken
     const setAuthenticated = props.setAuthenticated;
 
@@ -33,11 +36,17 @@ export default function LogIn(props) {
         });
     };
 
-    const dispatch = useDispatch();
-
+    const callbackModal = () =>{
+        setShowRegistrationModal(false);
+        ToastWrapper().info("You can log in now");
+    }
+    
 
     return (
         <div>
+            <InteractionModalWrapper open={showRegistrationModal}>
+                <UserModal callback={callbackModal}/>
+            </InteractionModalWrapper>
             <Container component="main" maxWidth="sm">``
                 <div>
                     <Avatar style={{
@@ -89,6 +98,14 @@ export default function LogIn(props) {
                             onClick={LoggingInSuccessfully}
                         >
                             Log in
+                        </Button>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={()=>{setShowRegistrationModal(true);}}
+                        >
+                            Register
                         </Button>
                         <Grid container>
                             <Grid item xs>

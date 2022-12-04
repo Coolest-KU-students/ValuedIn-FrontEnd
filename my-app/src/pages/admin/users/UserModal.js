@@ -6,6 +6,7 @@ import { makeStyles } from 'tss-react/mui';
 import { createNewUser, UpdateUser  } from '../../../API/internal_datasources/Users';
 import USER_ROLES from '../../../config/enums/UserRoles';
 import { ToastWrapper } from '../../global/notifications/ToastWrapper';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
@@ -17,7 +18,10 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function UserModal({ callback, userDetails }) {
-    const createUser = userDetails ? false : true;
+    const userRole = useSelector(state => state.UserRole);
+    const isGuest = userRole.systemName == USER_ROLES.GUEST.systemName;
+    const createUser = !isGuest && userDetails ? false : true;
+    
     userDetails = userDetails
         ? userDetails
         : { firstName: '', lastName: '', login: '', password: '', requirePasswordChange: '' };
@@ -30,7 +34,7 @@ export default function UserModal({ callback, userDetails }) {
     });
     const [login, setLogin] = useState(userDetails.login);
     const [password, setPassword] = useState(userDetails.password);
-    const [role, setRole] = useState(!!userDetails.role ? userDetails.role : USER_ROLES.DEFAULT);
+    const [role, setRole] = useState(!!userDetails.role ? userDetails.role : USER_ROLES.DEFAULT.systemName);
     const [requirePasswordChange, setRequirePasswordChange] = useState(false);
     const [toast, setToast] = useState();
     const [systemRoles] = useState(Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole));
@@ -158,6 +162,8 @@ export default function UserModal({ callback, userDetails }) {
                                 setPassword(e.target.value);
                             }}
                         />
+                        
+                        {!isGuest &&
                         <Typography>
                             <Checkbox
                                 onChange={() => {
@@ -165,10 +171,11 @@ export default function UserModal({ callback, userDetails }) {
                                 }}
                             />
                             Require a password change
-                        </Typography>
+                        </Typography>}
                     </>
                 )}
-                <FormControl fullWidth>
+                {!isGuest &&
+                <FormControl fullWidth >
                     <InputLabel id="demo-simple-select-label">Role</InputLabel>
                     <Select
                         id="demo-simple-select" 
@@ -186,7 +193,7 @@ export default function UserModal({ callback, userDetails }) {
                         )})}
 
                     </Select>
-                </FormControl>
+                </FormControl> }
                 <TextField
                     label="First Name"
                     autoFocus
