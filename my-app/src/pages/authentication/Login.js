@@ -8,9 +8,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';    
+import Container from '@mui/material/Container';  
 import { useDispatch } from 'react-redux';
-import USER_ROLES from '../../config/enums/UserRoles';
 import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
 
 //TODO: Get The Logo
@@ -36,10 +35,6 @@ export default function LogIn(props) {
 
     const dispatch = useDispatch();
 
-    const ByPassLogin = (userRole) =>{
-        dispatch(AssignRole(userRole));
-        LoggingInSuccessfully();
-    } 
 
     return (
         <div>
@@ -88,49 +83,12 @@ export default function LogIn(props) {
                         />
                         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.GUEST)}
+                            onClick={LoggingInSuccessfully}
                         >
-                            Log In as GUEST
-                        </Button> 
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.DEFAULT)}
-                        >
-                            Log In as DEFAULT
-                        </Button>
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.HR)}
-                        >
-                            Log In as HR
-                        </Button>
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.ORG_ADMIN)}
-                        >
-                            Log In as ORG Admin
-                        </Button>
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.SYSADMIN)}
-                        >
-                            Log In as SysAdmin
+                            Log in
                         </Button>
                         <Grid container>
                             <Grid item xs>

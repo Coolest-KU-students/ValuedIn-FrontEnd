@@ -3,7 +3,7 @@ import GLOBAL_CONFIG from '../config';
 
 const link = GLOBAL_CONFIG.internalAPISource;
 
-export const AuthenticateUser = (credentials, callback, errorCallback) =>{
+export const authenticateUser = (credentials, callback, errorCallback) =>{
     axios.post(link+"/auth/login", credentials)
         .then( response => {
             callback(response.data);

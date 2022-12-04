@@ -3,7 +3,11 @@ import axios from "axios";
 const STORAGE_ITEM_NAME = "authToken";
 
 const updateAxiosJWT = (token) =>{
-    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    !!token && (axios.defaults.headers.common["Authorization"] = "Bearer " + token);
+}
+
+export const refreshJWT = () =>{
+    setJWT(getJWT());
 }
 
 export const getJWT = () =>{
@@ -16,5 +20,6 @@ export const setJWT = (token) =>{
 }
 
 export const cleanJWT = () =>{
-    storeJWT('https://youtu.be/dQw4w9WgXcQ'); //unrecognizable JWT
+    setJWT(undefined); //unrecognizable JWT
+    delete axios.defaults.headers.common["Authorization"];
 }
