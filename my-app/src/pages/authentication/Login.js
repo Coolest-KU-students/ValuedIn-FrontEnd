@@ -8,10 +8,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';    
+import Container from '@mui/material/Container';  
 import { useDispatch } from 'react-redux';
-import USER_ROLES from '../../config/enums/UserRoles';
 import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
+import { ToastWrapper } from '../global/notifications/ToastWrapper';
+import UserModal from '../admin/users/UserModal';
+import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
 
 //TODO: Get The Logo
 function Image() {
@@ -21,9 +23,8 @@ function Image() {
 export default function LogIn(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [showRegistrationModal, setShowRegistrationModal] = useState(false);
     //TODO: Enhance Modal popup when correct auth error measures are taken
-    const [passwordModal, setPasswordModal] = useState(false);
     const setAuthenticated = props.setAuthenticated;
 
     document.body.style = 'background: linear-gradient(to right, #f64f29, #FEA880, #a0e5bc, #59F3E5, #01e2e9);';
@@ -35,15 +36,17 @@ export default function LogIn(props) {
         });
     };
 
-    const dispatch = useDispatch();
-
-    const ByPassLogin = (userRole) =>{
-        dispatch(AssignRole(userRole));
-        LoggingInSuccessfully();
-    } 
+    const callbackModal = () =>{
+        setShowRegistrationModal(false);
+        ToastWrapper().info("You can log in now");
+    }
+    
 
     return (
         <div>
+            <InteractionModalWrapper open={showRegistrationModal}>
+                <UserModal callback={callbackModal}/>
+            </InteractionModalWrapper>
             <Container component="main" maxWidth="sm">``
                 <div>
                     <Avatar style={{
@@ -89,49 +92,20 @@ export default function LogIn(props) {
                         />
                         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.GUEST)}
+                            onClick={LoggingInSuccessfully}
                         >
-                            Log In as GUEST
-                        </Button> 
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.DEFAULT)}
-                        >
-                            Log In as DEFAULT
+                            Log in
                         </Button>
-                            <Button
-                            type="submit"
+                        <Button
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.HR)}
+                            onClick={()=>{setShowRegistrationModal(true);}}
                         >
-                            Log In as HR
-                        </Button>
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.ORG_ADMIN)}
-                        >
-                            Log In as ORG Admin
-                        </Button>
-                            <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => ByPassLogin(USER_ROLES.SYSADMIN)}
-                        >
-                            Log In as SysAdmin
+                            Register
                         </Button>
                         <Grid container>
                             <Grid item xs>

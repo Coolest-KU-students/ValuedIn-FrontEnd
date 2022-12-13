@@ -6,6 +6,7 @@ import { makeStyles } from 'tss-react/mui';
 import { createNewUser, UpdateUser  } from '../../../API/internal_datasources/Users';
 import USER_ROLES from '../../../config/enums/UserRoles';
 import { ToastWrapper } from '../../global/notifications/ToastWrapper';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles()((theme) => ({
     paper: {
@@ -17,7 +18,10 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 export default function UserModal({ callback, userDetails }) {
-    const createUser = userDetails ? false : true;
+    const userRole = useSelector(state => state.UserRole);
+    const isGuest = userRole.systemName == USER_ROLES.GUEST.systemName;
+    const createUser = !isGuest && userDetails ? false : true;
+    
     userDetails = userDetails
         ? userDetails
         : { firstName: '', lastName: '', login: '', password: '', requirePasswordChange: '' };
@@ -30,12 +34,13 @@ export default function UserModal({ callback, userDetails }) {
     });
     const [login, setLogin] = useState(userDetails.login);
     const [password, setPassword] = useState(userDetails.password);
-    const [role, setRole] = useState(userDetails.role);
+    const [role, setRole] = useState(!!userDetails.role ? userDetails.role : USER_ROLES.DEFAULT.systemName);
     const [requirePasswordChange, setRequirePasswordChange] = useState(false);
     const [toast, setToast] = useState();
     const [systemRoles] = useState(Object.keys(USER_ROLES).filter(role => USER_ROLES[role].systemRole));
     const [toastWrapper] = useState(ToastWrapper());
-
+    const [email, setEmail] = useState(userDetails.email);
+    const [number, setNumber] = useState(userDetails.number);
 
     const handleLoad = () => {
         setSavingProgess(true);
@@ -81,6 +86,8 @@ export default function UserModal({ callback, userDetails }) {
                 role: role, 
                 login: login,
                 password: password,
+                email: email,
+                telephone: number
             },
             Callback
         );
@@ -94,6 +101,8 @@ export default function UserModal({ callback, userDetails }) {
                 lastName: fullName.lastName,
                 login: login,
                 role: role,
+                email: email,
+                telephone: number
             },
             Callback
         );
@@ -124,6 +133,67 @@ export default function UserModal({ callback, userDetails }) {
                 <Typography variant="h4" style={{ textAlign: 'center' }}>
                     {createUser ? 'Register new User:' : 'Edit User'}
                 </Typography>
+                {createUser && (
+                    <>
+                        <TextField
+                            label="Login"
+                            disabled={savingInProgress}
+                            style={{ margin: 8 }}
+                            fullWidth
+                            margin="normal"
+                            multiline
+                            required
+                            variant="outlined"
+                            onChange={(e) => {
+                                setLogin(e.target.value);
+                            }}
+                        />
+                        <TextField
+                            label="Password"
+                            disabled={savingInProgress && userDetails}
+                            style={{ margin: 8 }}
+                            helperText=""
+                            type="password"
+                            fullWidth
+                            required
+                            margin="normal"
+                            variant="outlined"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        />
+                        
+                        {!isGuest &&
+                        <Typography>
+                            <Checkbox
+                                onChange={() => {
+                                    setRequirePasswordChange(!requirePasswordChange);
+                                }}
+                            />
+                            Require a password change
+                        </Typography>}
+                    </>
+                )}
+                {!isGuest &&
+                <FormControl fullWidth >
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                        id="demo-simple-select" 
+                        value={role}
+                        label="Role"
+                        style={{ margin: 8 }}
+                        defaultValue={"DEFAULT"}
+                        fullWidth
+                        onChange={(e)=>{setRole(e.target.value)}}
+                    >   
+                        {
+                        systemRoles.map(role =>{ 
+                            return (
+                                <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
+                        )})}
+
+                    </Select>
+                </FormControl> }
                 <TextField
                     label="First Name"
                     autoFocus
@@ -148,51 +218,28 @@ export default function UserModal({ callback, userDetails }) {
                     variant="outlined"
                     onChange={setLastName}
                 />
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                    <Select
-                        id="demo-simple-select" 
-                        value={role}
-                        label="Role"
-                        style={{ margin: 8 }}
-                        defaultValue={"DEFAULT"}
-                        fullWidth
-                        onChange={(e)=>{setRole(e.target.value)}}
-                    >   
-                        {
-                        systemRoles.map(role =>{ 
-                            return (
-                                <MenuItem value={USER_ROLES[role].systemName}>{USER_ROLES[role].userFriendlyName}</MenuItem>
-                        )})}
-
-                    </Select>
-                </FormControl>
-                {createUser && (
-                    <>
-                        <TextField
-                            label="Password"
-                            disabled={savingInProgress && userDetails}
-                            style={{ margin: 8 }}
-                            helperText=""
-                            type="password"
-                            fullWidth
-                            required
-                            margin="normal"
-                            variant="outlined"
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                            }}
-                        />
-                        <Typography>
-                            <Checkbox
-                                onChange={() => {
-                                    setRequirePasswordChange(!requirePasswordChange);
-                                }}
-                            />
-                            Require a password change
-                        </Typography>
-                    </>
-                )}
+                <TextField
+                    label="Email"
+                    style={{ margin: 8 }}
+                    fullWidth
+                    value={email}
+                    disabled={savingInProgress}
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    onChange={(e) => {setEmail(e.target.value)}}
+                />
+                <TextField
+                    label="Telephone number"
+                    style={{ margin: 8 }}
+                    fullWidth
+                    value={number}
+                    disabled={savingInProgress}
+                    margin="normal"
+                    required
+                    variant="outlined"
+                    onChange={(e) => {setNumber(e.target.value)}}
+                />
                 <div style={{ textAlign: 'right' }}>
                     <Button
                         variant="contained"

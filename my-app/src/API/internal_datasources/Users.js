@@ -11,7 +11,8 @@ export const LoadPaginatedData = (setUsers, configuration, callback) => {
 };
 
 export const createNewUser = (config, callback) => {
-    axios.post(link+'/users/new', config)
+    console.log(config);
+    axios.post(link+'/auth/register', config)
         .then((response) => {
            // Notification('Success', response.data, 'success', 1500);
             if (typeof callback == typeof (() => {})) callback();

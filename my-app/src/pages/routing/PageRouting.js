@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import CheckForUserPermissions from '../../config/permissions/RoleAppPermissions';
 import UsersList from '../admin/users/UserList';
@@ -15,38 +15,61 @@ import UserProfile from '../profiles/UserProfile';
 import OrganizationProfile from '../profiles/OrganizationProfile';
 import HRProfile from '../profiles/HRProfile';
 import { ToastWrapper } from '../global/notifications/ToastWrapper';
-import { toast } from 'react-toastify';
+import { checkJWTValidity, authenticateUser } from '../../API/internal_datasources/Authentication';
+import { cleanJWT, setJWT , refreshJWT } from '../../API/browser/local_storage/JWTManagement';
+import { useDispatch } from 'react-redux';
+import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
+import USER_ROLES from '../../config/enums/UserRoles';
 
 
 const PageRouting = () => {
     const [IsAuthenticated, setAuthenticated] = useState(false);
-
     const userRole = useSelector(state => state.UserRole);
+    const [loaded, setLoaded] = useState(false)
 
 
-   /* useEffect(() => {
-        CheckJWTIsValid(SetLoadedAndAuthenticated);
+    useEffect(() => {
+        refreshJWT();
+        checkJWTValidity(
+            SetLoadedAndAuthenticated, 
+            ()=>{setLoaded(true); cleanJWT();});
     }, []);
-*/
-    /*const SetLoadedAndAuthenticated = (auth) => {
-        setAuthenticated(auth);
+
+    const SetLoadedAndAuthenticated = (auth) => {
+        successfulLogin(auth, true);
         setLoaded(true);
     };
-*/
+
+
+    const dispatch = useDispatch();
+
+    const attachRole = (userRole) =>{
+        dispatch(AssignRole(userRole));
+    } 
+
    /* const AuthenticationCallback = () => {
         setAuthenticated(true);
     };*/
 
-
+    const successfulLogin = (authData, hideToast) =>{
+        setJWT(authData.token);
+        attachRole(USER_ROLES[authData.role]);
+        !hideToast && ToastWrapper().success("Successfully logged in");
+        setAuthenticated(true);
+    }
     
 
     const AuthenticateUser = (credentials) => {
-        ToastWrapper().success("Successfully logged in");
-        setAuthenticated(true);
+        ToastWrapper("Logging In").default("Logging In...")
+        authenticateUser(
+            credentials, 
+            successfulLogin ,
+            ToastWrapper().error
+        )
     };
 
     const LogOut = () => {
-        //CleanJWTToken();
+        cleanJWT();
         ToastWrapper().success("Logged Out!");
         setAuthenticated(false);
     };
@@ -72,6 +95,7 @@ const PageRouting = () => {
     
 
     /*************/
+    if(loaded)
     return (
         <React.Fragment>
             <Router>
@@ -152,6 +176,8 @@ const PageRouting = () => {
             </Router>
         </React.Fragment>
     );
+
+    else return (<></>)
 };
 
 /* Temporary */
