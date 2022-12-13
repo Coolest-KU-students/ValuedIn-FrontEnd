@@ -40,7 +40,7 @@ function OrganizationProfile({AdjustNavbar}) {
                 <ValuesModal callback={value=>{addNewValue(value); setnewChatModal(false)}} />
             </InteractionModalWrapper>
      <Grid item xs={12}>
-    <img src={Banner1} alt="Logo" width="1230px" height="250px" style={{alignSelf: 'center'}}/>
+    <img src={Banner1} alt="Logo"  width="1488px" height="250px" style={{alignSelf: 'center'}}/>
   </Grid>
   <Grid item xs={6}>
     <Item> 

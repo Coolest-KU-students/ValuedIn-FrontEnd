@@ -1,16 +1,24 @@
 
-import { Divider, Paper, Typography } from '@mui/material'
+import { Divider, Paper, Typography, Avatar } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const JobTile = ({job}) => {
+
+    
+
     return (
         <Paper style={{margin: '15px'}}>
-            <Typography variant="h5" component={Link} to="#">
+            <Avatar src={job.jobAvatar} sx={{ width: 100, height: 100 }} style={{alignSelf: 'center'}}/>
+            <Typography variant="h4" component={Link} to={"/jobs/"+job.jobId} button>
+            
                 {job.jobTitle}
             </Typography>
-            <Typography variant="h6">{job.jobDescription}</Typography>
-            <Divider/> 
+            <Divider></Divider>
+            <Typography>
+                {job.jobDescription}
+            </Typography>
+
             <Typography variant="body2">Tags:{job.jobTags}</Typography>
         </Paper>
     )

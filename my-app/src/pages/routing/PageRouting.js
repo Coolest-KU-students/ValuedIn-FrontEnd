@@ -5,6 +5,7 @@ import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import JobFeed from '../feeds/jobs/JobFeed';
 import OrganizationFeed from '../feeds/organizations/OrganizationFeed';
+import { JobTrail } from '../feeds/jobs/JobTrail';
 import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
 import { useSelector } from 'react-redux';
@@ -128,6 +129,13 @@ const PageRouting = () => {
                                 <Route exact path="/jobs">
                                     <MainBodyWrapper>
                                         <JobFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/jobs/:id">
+                                    <MainBodyWrapper>
+                                        <JobTrail AdjustNavbar={AdjustNavbar} />
                                     </MainBodyWrapper>
                                 </Route>
                             }
