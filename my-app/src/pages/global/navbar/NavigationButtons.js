@@ -51,7 +51,7 @@ export default function NavigationButtons(props) {
             <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  icon={<HomeWorkIcon />} />
 
             {UseHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
-                <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/profiles" icon={<SettingsApplicationsIcon />} />
+                <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/user/0" icon={<SettingsApplicationsIcon />} />
             }
 
             {UseHasAccessTo(APP_GROUPS.CHATBOX) &&
@@ -86,6 +86,8 @@ export default function NavigationButtons(props) {
                     <SidebarButtonListItem text="Jobs" style={styleBasedOnType('Jobs')} linkTo="/jobs" icon={<LibraryAddCheckIcon />} />
                     
                     <SidebarButtonListItem text="Organizations" style={styleBasedOnType('Orgs')} linkTo="/organizations" icon={<PriorityHighIcon />} />
+                    
+                <SidebarButtonListItem text="Users" style={styleBasedOnType('Users')} linkTo="/users" icon={<PeopleIcon />} />
                 </Collapse>
             </>
             }
