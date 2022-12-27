@@ -92,6 +92,7 @@ export default function LogIn(props) {
                         />
                         <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
                         <Button
+                            style={{marginBottom: "5px"}}
                             fullWidth
                             variant="contained"
                             color="secondary"
@@ -106,6 +107,15 @@ export default function LogIn(props) {
                             onClick={()=>{setShowRegistrationModal(true);}}
                         >
                             Register
+                        </Button>
+                        <Button
+                            style={{marginTop: "5px"}}
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={()=>{ToastWrapper().error("Email system is not up yet")}}
+                        >
+                            Request Company registry
                         </Button>
                         <Grid container>
                             <Grid item xs>
