@@ -60,5 +60,5 @@ export const loadJobOverviews = (dataCallback) => {
 }
 
 export const loadJobProfile = (id, dataCallback) => {
-    setTimeout(()=>{dataCallback(MockedJobProfile)}, 300);
+    setTimeout(()=>{dataCallback(MockedJobProfile[id])}, 300);
 }

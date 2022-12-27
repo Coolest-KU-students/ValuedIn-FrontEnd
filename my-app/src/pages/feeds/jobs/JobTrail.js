@@ -7,17 +7,17 @@ import { JobProfile } from '../../profiles/JobProfile';
 
 export const JobTrail = () => {
 
-    const [profiles, setProfile] = useState([]);
+    const [profile, setProfile] = useState();
     const [initialLoadDone, setInitialLoadDone] = useState(false);
 
     useEffect(() => {
         DataReload();
     }, []);
 
-    const id = useParams();
+    const id = useParams().id;
 
     const DataReload = () =>{
-        loadJobProfile(id, LoadData);
+        loadJobProfile(id-1, LoadData);
     };
 
     const LoadData = (data) =>{
@@ -29,11 +29,7 @@ export const JobTrail = () => {
     return (
         <LoadingWrapper loaded={initialLoadDone}>
             <Container>
-                {
-                    profiles.map(profile => 
-                        <JobProfile profile={profile} />
-                    )
-                }
+                <JobProfile profile={profile} />
             </Container>
         </LoadingWrapper>
     )
