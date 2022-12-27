@@ -19,7 +19,7 @@ import CheckForUserPermissions from '../../../config/permissions/RoleAppPermissi
 import APP_GROUPS from '../../../config/enums/AppGroups';
 import CommentIcon from '@mui/icons-material/Comment';
 import { SidebarButtonListItem } from './SidebarButtons';
-
+import CorporateFareSharpIcon from '@mui/icons-material/CorporateFareSharp';
 export default function NavigationButtons(props) {
     const [open, setOpen] = useState(false);
 
@@ -85,7 +85,7 @@ export default function NavigationButtons(props) {
                 <Collapse in={open} timeout="auto" unmountOnExit style={{ paddingLeft: '0.5rem' }}>
                     <SidebarButtonListItem text="Jobs" style={styleBasedOnType('Jobs')} linkTo="/jobs" icon={<LibraryAddCheckIcon />} />
                     
-                    <SidebarButtonListItem text="Organizations" style={styleBasedOnType('Orgs')} linkTo="/organizations" icon={<PriorityHighIcon />} />
+                    <SidebarButtonListItem text="Organizations" style={styleBasedOnType('Orgs')} linkTo="/organizations" icon={<CorporateFareSharpIcon />} />
                     
                 <SidebarButtonListItem text="Users" style={styleBasedOnType('Users')} linkTo="/users" icon={<PeopleIcon />} />
                 </Collapse>

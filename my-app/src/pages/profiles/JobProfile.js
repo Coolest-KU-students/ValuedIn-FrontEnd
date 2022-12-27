@@ -3,9 +3,10 @@ import LocationOn from '@mui/icons-material/LocationOn';
 import SaveIcon from '@mui/icons-material/Save';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
+import { ToastWrapper } from '../global/notifications/ToastWrapper';
+import ContactPageSharpIcon from '@mui/icons-material/ContactPageSharp';
 
 export const JobProfile = ({profile}) => {
-
         const Item = styled(Paper)(({ theme }) => ({
           backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
           ...theme.typography.body2,
@@ -14,8 +15,6 @@ export const JobProfile = ({profile}) => {
           color: theme.palette.text.secondary,
           height: 600
         }));
-
-
 
         return (
   <Grid container spacing={2}>
@@ -35,8 +34,11 @@ export const JobProfile = ({profile}) => {
       </Typography>
     </Stack>
     <Typography>
-    <IconButton>
-      <SaveIcon sx={{ fontSize: 14 }} />
+    <IconButton onClick={()=>{ToastWrapper().success("Successfully boookmarked")}} title="Bookmark">
+      <SaveIcon sx={{ fontSize: 72 }} color="primary"/>
+    </IconButton>
+    <IconButton onClick={()=>{ToastWrapper().success("Successfully Applied")}} title="Apply">
+      <ContactPageSharpIcon sx={{ fontSize: 72 }} color="secondary"/>
     </IconButton>
     </Typography>
     </Item>
@@ -70,7 +72,8 @@ export const JobProfile = ({profile}) => {
         Values
         </Typography>
       <Divider/>
-          <Typography variant="body1" color="text.secondary"></Typography>
+        {profile.values.split(",").map(value =><Typography variant="body1" color="text.secondary">{value}</Typography>)}
+          
     </Stack>
     </Item>
   </Grid>

@@ -1,10 +1,12 @@
-import { Grid } from '@mui/material';
+import { Grid, Paper } from '@mui/material';
 import React, { useEffect } from 'react';
 import OrganizationTile from './OrganizationTile';
 import Organization1 from './../../../public/Organization1.jpg'
 import Organization2 from './../../../public/Organization2.jpg'
 import Organization3 from './../../../public/Organization3.jpg'
 import Organization4 from './../../../public/Organization4.jpg'
+import SearchBar from '../../global/SearchBar';
+import { ToastWrapper } from '../../global/notifications/ToastWrapper';
 
 function OrganizationFeed({AdjustNavbar}) {
 
@@ -21,15 +23,25 @@ function OrganizationFeed({AdjustNavbar}) {
         };
         AdjustNavbar(props, () => {});});
     
-    
+    const handleTextSearch = (value) =>{
+        ToastWrapper().error("Column not recognized");
+    }
+
+
     return (
-        <Grid container spacing={10}>
-            <Grid item xs={12}>
-                {organizations.map(org=>(
-                    <OrganizationTile org={org}/>
-                ))}
+        
+        <Paper style={{backgroundColor: "#FFFFFFAA", padding:"10px"}}>
+            <SearchBar 
+                    onRequestSearch={(value) => handleTextSearch(value)}
+                />
+            <Grid container spacing={10}>
+                <Grid item xs={12}>
+                    {organizations.map(org=>(
+                        <OrganizationTile org={org}/>
+                    ))}
+                </Grid>
             </Grid>
-        </Grid>
+        </Paper>
     );
 }
 

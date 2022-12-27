@@ -22,6 +22,7 @@ import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
 import USER_ROLES from '../../config/enums/UserRoles';
 import { UserFeed } from '../feeds/users/UserFeed';
 import OrganizationProfilePage from '../feeds/organizations/OrganizationProfilePage';
+import { JobTrail } from '../feeds/jobs/JobTrail';
 
 
 const PageRouting = () => {
@@ -130,6 +131,14 @@ const PageRouting = () => {
                                 <Route exact path="/jobs">
                                     <MainBodyWrapper>
                                         <JobFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/jobs/:id">
+                                    <MainBodyWrapper>
+                                        <JobTrail AdjustNavbar={AdjustNavbar} />
+                                        
                                     </MainBodyWrapper>
                                 </Route>
                             }

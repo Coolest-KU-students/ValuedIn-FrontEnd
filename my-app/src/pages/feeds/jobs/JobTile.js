@@ -20,6 +20,10 @@ const JobTile = ({job}) => {
             </Typography>
 
             <Typography variant="body2">Tags:{job.jobTags}</Typography>
+            
+            <Divider></Divider>
+            <Typography variant="body2">Values: {job.values}</Typography>
+            <Typography variant="body2">Match: {job.match}%</Typography>
         </Paper>
     )
 }

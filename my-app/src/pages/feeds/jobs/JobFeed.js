@@ -2,6 +2,8 @@ import { Grid, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { loadJobOverviews } from '../../../API/internal_datasources/Jobs';
 import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
+import { ToastWrapper } from '../../global/notifications/ToastWrapper';
+import SearchBar from '../../global/SearchBar';
 import JobTile from './JobTile';
 
 
@@ -26,14 +28,17 @@ const JobFeed = ({ AdjustNavbar }) => {
     
         const LoadData = (data) =>{
             setJobs(data);
-            console.log(jobs);
             setInitialLoadDone(true);
         };
-    
+        const handleTextSearch = (value) =>{
+            ToastWrapper().error("Column not recognized");
+        }
+
     return (
     <>
         <LoadingWrapper loaded = {initialLoadDone}>
         <Paper style={{backgroundColor:"ghostwhite"}}>
+        <SearchBar onRequestSearch={(value) => handleTextSearch(value)} />
             <Grid container spacing={1}> 
                 {
                     jobs.map((job)=>(
