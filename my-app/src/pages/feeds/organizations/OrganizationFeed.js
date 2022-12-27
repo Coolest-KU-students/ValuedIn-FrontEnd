@@ -7,6 +7,7 @@ import Organization3 from './../../../public/Organization3.jpg'
 import Organization4 from './../../../public/Organization4.jpg'
 import SearchBar from '../../global/SearchBar';
 import { ToastWrapper } from '../../global/notifications/ToastWrapper';
+import { SortingCard } from '../../global/SortingCard';
 
 function OrganizationFeed({AdjustNavbar}) {
 
@@ -34,6 +35,7 @@ function OrganizationFeed({AdjustNavbar}) {
             <SearchBar 
                     onRequestSearch={(value) => handleTextSearch(value)}
                 />
+                <SortingCard ></SortingCard>
             <Grid container spacing={10}>
                 <Grid item xs={12}>
                     {organizations.map(org=>(

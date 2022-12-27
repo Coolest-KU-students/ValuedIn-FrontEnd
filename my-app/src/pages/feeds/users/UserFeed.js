@@ -3,6 +3,7 @@ import { GetUserFeed } from '../../../API/internal_datasources/Users'
 import { UserTile } from './UserTile';
 import { Grid, Paper, Table, TableFooter, TablePagination } from '@mui/material';
 import SearchBar from '../../global/SearchBar';
+import { SortingCard } from '../../global/SortingCard';
 
 
 
@@ -58,6 +59,8 @@ export const UserFeed = ({AdjustNavbar}) => {
                     onRequestSearch={(value) => handleTextSearch(value)}
                     style={{marginLeft: '25px', marginRight: "25px"}}
                 />
+                
+                <SortingCard style={{marginLeft:"15px"}}></SortingCard>
                 </Grid>
                 <Grid item xs={12} style={{paddingTop: "5px"}}>
             {users.map(

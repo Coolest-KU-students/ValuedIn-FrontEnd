@@ -4,6 +4,7 @@ import { loadJobOverviews } from '../../../API/internal_datasources/Jobs';
 import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
 import { ToastWrapper } from '../../global/notifications/ToastWrapper';
 import SearchBar from '../../global/SearchBar';
+import { SortingCard } from '../../global/SortingCard';
 import JobTile from './JobTile';
 
 
@@ -39,6 +40,7 @@ const JobFeed = ({ AdjustNavbar }) => {
         <LoadingWrapper loaded = {initialLoadDone}>
         <Paper style={{backgroundColor:"ghostwhite"}}>
         <SearchBar onRequestSearch={(value) => handleTextSearch(value)} />
+        <SortingCard ></SortingCard>
             <Grid container spacing={1}> 
                 {
                     jobs.map((job)=>(
