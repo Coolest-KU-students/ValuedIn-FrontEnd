@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { loadMessageHistory, sendNewMessage } from '../../../API/internal_datasources/Messages';
@@ -33,12 +33,14 @@ export const MessageHistoryTrail = () => {
     return (
         <LoadingWrapper loaded={initialLoadDone}>
             <Container>
+                
+                <Paper style={{backgroundColor: "#FFFFFFAA", padding:"10px"}}>
                 <NewMessage onSend={sendMessage} />
                 {
                     messages.map(message => 
                         <SingleMessage message={message} />
                     )
-                }
+                }</Paper>
             </Container>
         </LoadingWrapper>
     )

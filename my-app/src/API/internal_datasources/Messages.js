@@ -12,11 +12,10 @@ const createMockUserMessage = (fullName, lastMessageContent, lastMessageTime, pr
 }
 
 const MockedData = [
-    createMockUserMessage("Jack Black", "Hey man, let's get groovy", "1989/07/12", ""),
-    createMockUserMessage("John Doe", "I need my shoes back.", "2001/12/05", ""),
-    createMockUserMessage("William Turner", "Have You heard of our lord and savior", "2005/08/03", ""),
-    createMockUserMessage("Spare Jackow", "Why's the rum gone", "1005/05/18", "")
-]
+    createMockUserMessage("Jack Black", "Hey man, let's get groovy", "1989/07/12", "https://randomuser.me/api/portraits/men/1.jpg"),
+    createMockUserMessage("John Doe", "I need my shoes back.", "2001/12/05", "https://randomuser.me/api/portraits/men/3.jpg"),
+    createMockUserMessage("William Turner", "Have You heard of our lord and savior", "2005/08/03", "https://randomuser.me/api/portraits/men/6.jpg"),
+    createMockUserMessage("Spare Jackow", "Why's the rum gone", "1005/05/18", "https://randomuser.me/api/portraits/men/5.jpg")];
 
 const createMockMessageHistory = (fullName, sentTime, isAuthor, messageContent) =>{
     return {

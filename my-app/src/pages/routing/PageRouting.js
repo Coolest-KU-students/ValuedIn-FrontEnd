@@ -106,7 +106,7 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
-                            {UserHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
                                     <Route exact path="/user/:id">
                                         <MainBodyWrapper>
                                             <UserProfile AdjustNavbar={AdjustNavbar} />

@@ -9,7 +9,7 @@ const SingleMessageCard = ({messageData}) => {
                 <Card>
                     <Grid container spacing={1}> 
                         <Grid item xs={2}>
-                            <img src={messageData.profilePhotoRef} alt="Avatar" width="350px" height="150px"/>
+                            <img src={messageData.profilePhotoRef} alt="Avatar" width="250px" height="150px"/>
                         </Grid>
                         <Grid item xs={1}>
                         </Grid>

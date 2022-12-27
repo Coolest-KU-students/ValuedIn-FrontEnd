@@ -44,6 +44,7 @@ export const UserFeed = ({AdjustNavbar}) => {
     useEffect(() => {
         const props = {
             PageName: 'User Feed',
+            currentListElement: 'Users',
         };
         AdjustNavbar(props, () => {});}
         , []);

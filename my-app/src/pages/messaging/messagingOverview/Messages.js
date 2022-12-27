@@ -1,4 +1,4 @@
-import { Container, Modal } from '@mui/material';
+import { Container, Modal, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { loadMessageOverviews } from '../../../API/internal_datasources/Messages';
 import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
@@ -40,10 +40,13 @@ const Messages = ({AdjustNavbar}) => {
             </InteractionModalWrapper>
             <LoadingWrapper loaded = {initialLoadDone}>
                 <Container>
+                    <Paper style={{backgroundColor: "#FFFFFFAA", padding:"10px"}}>
                     { messageOverviewData.map(message => 
                             <SingleMessageCard messageData={message} />
                         )
                     }
+                    </Paper>
+                    
                 </Container>
             </LoadingWrapper>
         </>
