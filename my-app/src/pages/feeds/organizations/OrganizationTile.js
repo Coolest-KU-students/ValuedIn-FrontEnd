@@ -1,5 +1,6 @@
 import { Divider, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const OrganizationTile = ({org}) => {
 
@@ -11,7 +12,7 @@ const OrganizationTile = ({org}) => {
                     <img src={org.imageLink} alt="Logo" width="350px" height="150px"/>
                 </Grid>
                 <Grid item xs={8}>
-                    <Typography variant="h5">
+                    <Typography variant="h5" component={Link} to={"/organization/"+org.id}>
                         {org.name}
                     </Typography>
                     <Divider/>

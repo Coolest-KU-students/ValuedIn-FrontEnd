@@ -5,7 +5,6 @@ import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import JobFeed from '../feeds/jobs/JobFeed';
 import OrganizationFeed from '../feeds/organizations/OrganizationFeed';
-import { JobTrail } from '../feeds/jobs/JobTrail';
 import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
 import { useSelector } from 'react-redux';
@@ -22,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
 import USER_ROLES from '../../config/enums/UserRoles';
 import { UserFeed } from '../feeds/users/UserFeed';
+import OrganizationProfilePage from '../feeds/organizations/OrganizationProfilePage';
 
 
 const PageRouting = () => {
@@ -134,13 +134,6 @@ const PageRouting = () => {
                                 </Route>
                             }
                             {UserHasAccessTo(APP_GROUPS.FEEDS) &&
-                                <Route exact path="/jobs/:id">
-                                    <MainBodyWrapper>
-                                        <JobTrail AdjustNavbar={AdjustNavbar} />
-                                    </MainBodyWrapper>
-                                </Route>
-                            }
-                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
                                 <Route exact path="/organizations">
                                     <MainBodyWrapper>
                                         <OrganizationFeed AdjustNavbar={AdjustNavbar} />
@@ -151,6 +144,13 @@ const PageRouting = () => {
                                 <Route exact path="/users">
                                     <MainBodyWrapper>
                                         <UserFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/organization/:id">
+                                    <MainBodyWrapper>
+                                        <OrganizationProfilePage AdjustNavbar={AdjustNavbar} ></OrganizationProfilePage>
                                     </MainBodyWrapper>
                                 </Route>
                             }

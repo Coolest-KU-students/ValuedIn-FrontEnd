@@ -9,10 +9,10 @@ import Organization4 from './../../../public/Organization4.jpg'
 function OrganizationFeed({AdjustNavbar}) {
 
     const organizations = [
-        {imageLink: Organization1, name:"BarberShop", description:"Classic BarberShop" },
-        {imageLink: Organization2, name:"Saturated Development", description:"We develop projects for incredible ideas" },
-        {imageLink: Organization3, name:"WapeNash", description:"Ping Pong, pick Your Bong" },
-        {imageLink: Organization4, name:"Secret Shakespearean Club", description:"Selling Highest quality Shakespearean books+" },
+        {id: 0, imageLink: Organization1, name:"BarberShop", description:"Classic BarberShop" },
+        {id: 1, imageLink: Organization2, name:"Saturated Development", description:"We develop projects for incredible ideas" },
+        {id: 2, imageLink: Organization3, name:"WapeNash", description:"Ping Pong, pick Your Bong" },
+        {id: 3, imageLink: Organization4, name:"Secret Shakespearean Club", description:"Selling Highest quality Shakespearean books+" },
     ]
     useEffect(() => {
         const props = {
