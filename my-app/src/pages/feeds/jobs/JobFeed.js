@@ -1,36 +1,51 @@
 import { Grid, Paper } from '@mui/material';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { loadJobOverviews } from '../../../API/internal_datasources/Jobs';
+import { LoadingWrapper } from '../../global/loadingMgmt/LoadingWrapper';
 import JobTile from './JobTile';
 
 
 const JobFeed = ({ AdjustNavbar }) => {
 
-    const jobs = [
-        {jobTitle: "Job 1", jobDescription:"This is a job", jobTags:"Good, job, this"}, 
-        {jobTitle: "Job 2", jobDescription:"This is also a job", jobTags:"Good, also, job, this"},
-        {jobTitle: "Job 3", jobDescription:"This is another job", jobTags:"Good, another, job, this"},
-        {jobTitle: "Job 4", jobDescription:"This is the last job", jobTags:"Good, last job, this"},
-    ];
+    const [jobs, setJobs] = useState([]);
+    const [initialLoadDone, setInitialLoadDone] = useState(false);
+
     useEffect(() => {
         const props = {
             PageName: 'Job Feed',
             currentListElement: 'Jobs',
         };
-        AdjustNavbar(props, () => {});});
+
+        AdjustNavbar(props, () => {});
+        DataReload();
+    }, []);
+        
+        const DataReload = () =>{
+            loadJobOverviews(LoadData);
+        };
     
+        const LoadData = (data) =>{
+            setJobs(data);
+            console.log(jobs);
+            setInitialLoadDone(true);
+        };
     
     return (
+    <>
+        <LoadingWrapper loaded = {initialLoadDone}>
         <Paper style={{backgroundColor:"ghostwhite"}}>
             <Grid container spacing={1}> 
                 {
                     jobs.map((job)=>(
-                        <Grid item xs={4}>
+                        <Grid item xs={6}>
                             <JobTile job={job} />
                         </Grid>
                     ))
                 }
             </Grid>
         </Paper>
+        </LoadingWrapper> 
+        </>
     )
 }
 
