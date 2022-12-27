@@ -1,15 +1,18 @@
 import { Grid } from '@mui/material';
 import React, { useEffect } from 'react';
 import OrganizationTile from './OrganizationTile';
-import Organization1 from './../../../public/Organization1.png'
-import Organization2 from './../../../public/Organization2.webp'
+import Organization1 from './../../../public/Organization1.jpg'
+import Organization2 from './../../../public/Organization2.jpg'
+import Organization3 from './../../../public/Organization3.jpg'
+import Organization4 from './../../../public/Organization4.jpg'
+
 function OrganizationFeed({AdjustNavbar}) {
 
     const organizations = [
         {imageLink: Organization1, name:"BarberShop", description:"Classic BarberShop" },
         {imageLink: Organization2, name:"Saturated Development", description:"We develop projects for incredible ideas" },
-        {imageLink: Organization1, name:"WapeNash", description:"Ping Pong, pick Your Bong" },
-        {imageLink: Organization2, name:"Secret Shakespearean Club", description:"Selling Highest quality Shakespearean books+" },
+        {imageLink: Organization3, name:"WapeNash", description:"Ping Pong, pick Your Bong" },
+        {imageLink: Organization4, name:"Secret Shakespearean Club", description:"Selling Highest quality Shakespearean books+" },
     ]
     useEffect(() => {
         const props = {
