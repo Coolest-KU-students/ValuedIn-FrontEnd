@@ -12,7 +12,7 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { ValuesModal } from './ValuesModal';
 import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { GetUserById } from '../../API/internal_datasources/Users';
 
 function UserProfile({AdjustNavbar }) {
@@ -69,6 +69,9 @@ function UserProfile({AdjustNavbar }) {
     {isSelf && <IconButton>
       <Edit sx={{ fontSize: 14 }} />
     </IconButton>}
+
+    {!isSelf && <Button component={Link} to="/messages/0">✉Message</Button>}
+
     </Typography>
     </Item>
   </Grid>

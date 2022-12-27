@@ -77,7 +77,7 @@ const MOCK_USERS = [
         city: "Scranton, PA",
         CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
         photo: "https://randomuser.me/api/portraits/men/1.jpg",
-        banner: "https://randomuser.me/api/portraits/men/1.jpg"
+        banner: "https://static.wikia.nocookie.net/theoffice/images/2/2d/Dunder_Mifflin%2C_Inc_Long.jpg"
     },
     {
         id: 2,
@@ -88,7 +88,7 @@ const MOCK_USERS = [
         city: "Scranton, PA",
         CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
         photo: "https://randomuser.me/api/portraits/men/2.jpg",
-        banner: "https://randomuser.me/api/portraits/men/1.jpg"
+        banner:"https://static.wikia.nocookie.net/theoffice/images/2/2d/Dunder_Mifflin%2C_Inc_Long.jpg"
     },
     {
         id: 3,
@@ -99,7 +99,7 @@ const MOCK_USERS = [
         city: "Scranton, PA",
         CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
         photo: "https://randomuser.me/api/portraits/men/3.jpg",
-        banner: "https://randomuser.me/api/portraits/men/1.jpg"
+        banner:"https://static.wikia.nocookie.net/theoffice/images/2/2d/Dunder_Mifflin%2C_Inc_Long.jpg"
     },
     {
         id: 4,
@@ -110,7 +110,7 @@ const MOCK_USERS = [
         city: "Scranton, PA",
         CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
         photo: "https://randomuser.me/api/portraits/men/4.jpg",
-        banner: "https://randomuser.me/api/portraits/men/1.jpg"
+        banner:"https://static.wikia.nocookie.net/theoffice/images/2/2d/Dunder_Mifflin%2C_Inc_Long.jpg"
     },
     {
         id: 5,
@@ -121,11 +121,11 @@ const MOCK_USERS = [
         city: "Scranton, PA",
         CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
         photo: "https://randomuser.me/api/portraits/men/5.jpg",
-        banner: "https://randomuser.me/api/portraits/men/1.jpg"
+        banner:"https://static.wikia.nocookie.net/theoffice/images/2/2d/Dunder_Mifflin%2C_Inc_Long.jpg"
     },
-    mockUser(6, "John Kennedy", "Self-Employed Filantropist", "Genius, Hopeful, Successful, Believer, Humble", "37","https://randomuser.me/api/portraits/men/8.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"], "https://randomuser.me/api/portraits/men/1.jpg"),
-    mockUser(7, "Jack Black", "Musician", "Straight-forward, Creative, Busy, Charming, Funny", "56","https://randomuser.me/api/portraits/men/9.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://randomuser.me/api/portraits/men/1.jpg"),
-    mockUser(8, "Catherine El Mugeto", "Singer/Mom", "Honest, Abrupt, Funny, Serious", "50%","https://randomuser.me/api/portraits/men/10.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://randomuser.me/api/portraits/men/1.jpg"),
-    mockUser(9, "Jonny Black", "Product Manager at PearlBright", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/11.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://randomuser.me/api/portraits/men/1.jpg"),
-    mockUser(10, "Pramiro Hon Cuse", "", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/12.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://randomuser.me/api/portraits/men/1.jpg"),
+    mockUser(6, "John Kennedy", "Self-Employed Filantropist", "Genius, Hopeful, Successful, Believer, Humble", "37","https://randomuser.me/api/portraits/men/8.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"], "https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
+    mockUser(7, "Jack Black", "Musician", "Straight-forward, Creative, Busy, Charming, Funny", "56","https://randomuser.me/api/portraits/men/9.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
+    mockUser(8, "Catherine El Mugeto", "Singer/Mom", "Honest, Abrupt, Funny, Serious", "50%","https://randomuser.me/api/portraits/men/10.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
+    mockUser(9, "Jonny Black", "Product Manager at PearlBright", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/11.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
+    mockUser(10, "Pramiro Hon Cuse", "", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/12.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
 ];
