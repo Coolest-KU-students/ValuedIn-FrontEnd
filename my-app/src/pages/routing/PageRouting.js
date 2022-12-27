@@ -21,6 +21,7 @@ import { cleanJWT, setJWT , refreshJWT } from '../../API/browser/local_storage/J
 import { useDispatch } from 'react-redux';
 import { AssignRole } from '../../redux/reducers/actions/UserRoleAction';
 import USER_ROLES from '../../config/enums/UserRoles';
+import { UserFeed } from '../feeds/users/UserFeed';
 
 
 const PageRouting = () => {
@@ -104,13 +105,13 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
-                        {UserHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
-                                <Route exact path="/profiles">
-                                    <MainBodyWrapper>
-                                        <UserProfile AdjustNavbar={AdjustNavbar} />
-                                    </MainBodyWrapper>
-                                </Route>
-                            }
+                            {UserHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
+                                    <Route exact path="/user/:id">
+                                        <MainBodyWrapper>
+                                            <UserProfile AdjustNavbar={AdjustNavbar} />
+                                        </MainBodyWrapper>
+                                    </Route>
+                                } 
                              {UserHasAccessTo(APP_GROUPS.ORGANIZATION_EDITING) &&
                                 <Route exact path="/organizations">
                                     <MainBodyWrapper>
@@ -143,6 +144,13 @@ const PageRouting = () => {
                                 <Route exact path="/organizations">
                                     <MainBodyWrapper>
                                         <OrganizationFeed AdjustNavbar={AdjustNavbar} />
+                                    </MainBodyWrapper>
+                                </Route>
+                            }
+                            {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                <Route exact path="/users">
+                                    <MainBodyWrapper>
+                                        <UserFeed AdjustNavbar={AdjustNavbar} />
                                     </MainBodyWrapper>
                                 </Route>
                             }

@@ -12,9 +12,17 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { ValuesModal } from './ValuesModal';
 import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
-function UserProfile({AdjustNavbar}) {
+import {useParams} from 'react-router-dom';
+import { GetUserById } from '../../API/internal_datasources/Users';
 
-  const [values, setValues] = useState(getValues()); 
+function UserProfile({AdjustNavbar }) {
+
+  const userData = GetUserById(useParams().id); 
+
+  const isSelf = !userData;
+
+  const [currentUser, setCurrentUser] = useState(!isSelf ? userData : getDefaultUser());
+  const [values, setValues] = useState(!isSelf ? userData.values.split(',') :getValues()); 
 
     useEffect(() => {
         const props = {
@@ -22,6 +30,7 @@ function UserProfile({AdjustNavbar}) {
         };
         AdjustNavbar(props, () => {});}
         , []);
+
 
         const Item = styled(Paper)(({ theme }) => ({
           backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -41,25 +50,25 @@ function UserProfile({AdjustNavbar}) {
 
         return (
   <Grid container spacing={2}>
-    <InteractionModalWrapper open={newChatModal}>
+    <InteractionModalWrapper open={newChatModal && isSelf}>
                 <ValuesModal callback={value=>{addNewValue(value); setnewChatModal(false)}} />
             </InteractionModalWrapper>
     <Grid item xs={12}>
-    <img src={Banner1} alt="Logo"  width="1488px" height="250px" style={{alignSelf: 'center'}}/>
+    <img src={currentUser.banner} alt="Logo" width="1488px" height="250px" style={{alignSelf: 'center'}}/>
   </Grid>
   <Grid item xs={4}>
     <Item> 
     <Stack spacing={1}>
-    <Avatar src={MichaelScott} sx={{ width: 150, height: 150 }} style={{alignSelf: 'center'}}/>
-      <Typography  variant="h5" fontWeight={700}>Michael Scott</Typography>
+    <Avatar src={currentUser.photo} sx={{ width: 150, height: 150 }} style={{alignSelf: 'center'}}/>
+        <Typography  variant="h5" fontWeight={700}>{currentUser.fullName}</Typography>
       <Typography variant="body1" color="text.secondary">
-      <LocationOn sx={{color: grey[500]}} /> Scranton, PA
+      <LocationOn sx={{color: grey[500]}} /> {currentUser.city}
       </Typography>
     </Stack>
     <Typography>
-    <IconButton>
+    {isSelf && <IconButton>
       <Edit sx={{ fontSize: 14 }} />
-    </IconButton>
+    </IconButton>}
     </Typography>
     </Item>
   </Grid>
@@ -68,14 +77,14 @@ function UserProfile({AdjustNavbar}) {
     <Stack spacing={1}>
       <Typography  variant="h3" fontWeight={700}>CV</Typography>
       <Divider/>
-      <Typography variant="body1" color="text.secondary">Field of work: Paper management</Typography>
-      <Typography variant="body1" color="text.secondary">Duration: 20 years</Typography>
-      <Typography variant="body1" color="text.secondary">Skills: sales, management </Typography>
+      {currentUser.CV.map(cv=>
+          <Typography variant="body1" color="text.secondary">{cv} </Typography>
+      )}
     </Stack>
       <Typography>
-    <IconButton>
-      <Edit sx={{ fontSize: 14 }} />
-    </IconButton>
+    {isSelf && <IconButton>
+      <Edit sx={{ fontSize: 14 }}/>
+    </IconButton>}
     </Typography>
     </Item>
   </Grid>
@@ -84,7 +93,7 @@ function UserProfile({AdjustNavbar}) {
     <Stack spacing={1}>
       <Typography  variant="h3" fontWeight={700}>
         Values
-        <Button onClick={()=>{setnewChatModal(true)}}>Add</Button>
+        {isSelf && <Button onClick={()=>{setnewChatModal(true)}}>Add</Button>}
         </Typography>
       <Divider/>
       {
@@ -93,6 +102,9 @@ function UserProfile({AdjustNavbar}) {
           <Typography variant="body1" color="text.secondary">{value}</Typography>
         )
       }
+      <Divider/>
+        
+      {!isSelf && <Typography variant="body1" color="text.secondary">Match: {currentUser.match}%</Typography>}
     </Stack>
     </Item>
   </Grid>
@@ -115,6 +127,19 @@ function UserProfile({AdjustNavbar}) {
 
 const getValues = () =>{
   return ["Honesty", "Loyalty", "Sense of humour"];
+}
+
+const getDefaultUser = () =>{
+  return {
+    id: 0,
+    fullName : "Michael Scott", 
+    city: "Scranton, PA",
+    CV: ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],
+    values: getValues(),
+    photo: MichaelScott,
+    banner: Banner1,
+    match: null
+  }
 }
 
 
