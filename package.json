@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/liuxess/ValuedIn-frontend/issues"
   },
-  "homepage": "https://github.com/liuxess/ValuedIn-frontend#readme"
+  "homepage": "https://github.com/liuxess/ValuedIn-frontend#readme",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  }
 }
