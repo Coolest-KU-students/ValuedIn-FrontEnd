@@ -59,6 +59,10 @@ const MockedJobProfile = [
 
 
 
+export const justGetTheJobs = () =>{
+    return MockedData;
+}
+
 export const loadJobOverviews = (dataCallback) => {
     setTimeout(()=>{dataCallback(MockedData)}, 300);
 }

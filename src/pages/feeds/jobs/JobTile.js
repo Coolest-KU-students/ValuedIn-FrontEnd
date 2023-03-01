@@ -8,7 +8,7 @@ const JobTile = ({job}) => {
     
 
     return (
-        <Paper style={{margin: '15px'}}>
+        <Paper style={{margin: '25px', padding: "10px"}}>
             <Avatar src={job.jobAvatar} sx={{ width: 100, height: 100 }} style={{alignSelf: 'center'}}/>
             <Typography variant="h4" component={Link} to={"/jobs/"+job.jobId} button>
             
@@ -23,7 +23,7 @@ const JobTile = ({job}) => {
             
             <Divider></Divider>
             <Typography variant="body2">Values: {job.values}</Typography>
-            <Typography variant="body2">Match: {job.match}%</Typography>
+            <Typography variant="body2"  fontWeight="bold">Match: {job.match}%</Typography>
         </Paper>
     )
 }

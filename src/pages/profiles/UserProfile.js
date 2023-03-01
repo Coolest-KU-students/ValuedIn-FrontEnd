@@ -14,6 +14,7 @@ import { ValuesModal } from './ValuesModal';
 import { InteractionModalWrapper } from '../global/wrappers/InteractionModalWrapper';
 import {Link, useParams} from 'react-router-dom';
 import { GetUserById } from '../../API/internal_datasources/Users';
+import { MatchingCircles } from '../global/MatchingCircles';
 
 function UserProfile({AdjustNavbar }) {
 
@@ -56,6 +57,12 @@ function UserProfile({AdjustNavbar }) {
     <Grid item xs={12}>
     <img src={currentUser.banner} alt="Logo" width="1488px" height="250px" style={{alignSelf: 'center'}}/>
   </Grid>
+  { !isSelf && <Grid item xs={12}>
+  <div> 
+           <MatchingCircles name={currentUser.fullName} match={currentUser.match}>
+           </MatchingCircles>
+       </div>
+  </Grid>}
   <Grid item xs={4}>
     <Item> 
     <Stack spacing={1}>

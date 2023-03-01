@@ -18,9 +18,9 @@ const USER_ROLES = {
         userFriendlyName: "Organization Admin",
         inheritedRoles: []
     },
-    SYSADMIN: {
+    SYS_ADMIN: {
         systemRole: true,
-        systemName: "SYSADMIN",
+        systemName: "SYS_ADMIN",
         userFriendlyName: "System Administrator",
         inheritedRoles: []
     },

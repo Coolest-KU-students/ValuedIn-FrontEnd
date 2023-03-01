@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { getOrganizationById } from '../../../API/internal_datasources/Organizations';
+import { MatchingCircles } from '../../global/MatchingCircles';
 function OrganizationProfilePage({AdjustNavbar}) {
 
 
@@ -40,6 +41,12 @@ function OrganizationProfilePage({AdjustNavbar}) {
   <Grid container spacing={2}>
      <Grid item xs={12}>
     <img src={organization.banner} alt="Logo"  width="1488px" height="250px" style={{alignSelf: 'center'}}/>
+  </Grid>
+  <Grid item xs={12}>
+       <div>
+                <MatchingCircles name={organization.name} match={organization.match}>
+                </MatchingCircles>
+            </div>
   </Grid>
   <Grid item xs={6}>
     <Item> 

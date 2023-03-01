@@ -4,6 +4,7 @@ import CheckForUserPermissions from '../../config/permissions/RoleAppPermissions
 import UsersList from '../admin/users/UserList';
 import LogIn from '../authentication/Login';
 import JobFeed from '../feeds/jobs/JobFeed';
+import HomeFeed from '../feeds/HomeFeed';
 import OrganizationFeed from '../feeds/organizations/OrganizationFeed';
 import Navbar from '../global/navbar/Navbar';
 import MainBodyWrapper from '../global/wrappers/MainBodyWrapper';
@@ -106,6 +107,19 @@ const PageRouting = () => {
                     <>
                         <Navbar {...navbarConfig.props}>{navbarConfig.children()}</Navbar>
                         <Switch>
+                        {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                    <Route exact path="/home">
+                                        <MainBodyWrapper>
+                                            <HomeFeed AdjustNavbar={AdjustNavbar} />
+                                        </MainBodyWrapper>
+                                    </Route>}
+                        {UserHasAccessTo(APP_GROUPS.FEEDS) &&
+                                     <Route exact path="/">
+                                     <MainBodyWrapper>
+                                         <HomeFeed AdjustNavbar={AdjustNavbar} />
+                                     </MainBodyWrapper>
+                                 </Route>
+                                } 
                             {UserHasAccessTo(APP_GROUPS.FEEDS) &&
                                     <Route exact path="/user/:id">
                                         <MainBodyWrapper>
@@ -188,7 +202,7 @@ const PageRouting = () => {
                                 path="/logout"
                                 render={() => {
                                     LogOut();
-                                    return <Redirect exact to="/" />;
+                                    return <Redirect exact to="/home" />;
                                 }}
                             />
                             

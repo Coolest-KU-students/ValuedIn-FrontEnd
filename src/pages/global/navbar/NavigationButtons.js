@@ -48,7 +48,7 @@ export default function NavigationButtons(props) {
                 Navigation
             </ListSubheader>
 
-            <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  icon={<HomeWorkIcon />} />
+            <SidebarButtonListItem text="Home" style={styleBasedOnType('Home')}  linkTo="/home" icon={<HomeWorkIcon />} />
 
             {UseHasAccessTo(APP_GROUPS.PERSONAL_PROFILE) &&
                 <SidebarButtonListItem text="Profile" style={styleBasedOnType('Profile')} linkTo="/user/0" icon={<SettingsApplicationsIcon />} />

@@ -2,6 +2,7 @@
 import { Divider, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { MatchingCircles } from '../../global/MatchingCircles';
 
 export const UserTile = ({userData}) => {
     console.log(userData.userData);
@@ -16,7 +17,7 @@ export const UserTile = ({userData}) => {
                         {userData.fullName}
                     </Typography>
                     <Typography variant="h6">{userData.status}</Typography>
-                    <Typography variant="h6"> Match: {userData.match}%</Typography>
+                    <Typography variant="h6" fontWeight="bold"> Match: {userData.match}%</Typography>
                 </Grid>
             </Grid>
             <Divider/> 

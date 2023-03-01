@@ -4,7 +4,7 @@ import GLOBAL_CONFIG from '../config';
 const link = GLOBAL_CONFIG.internalAPISource;
 
 export const LoadPaginatedData = (setUsers, configuration, callback) => {
-    axios.post(link+'/users/', configuration).then((response) => {
+    axios.post(link+'/users/page', configuration).then((response) => {
         setUsers(response.data);
         if (typeof callback == typeof (() => {})) callback();
     });
@@ -44,6 +44,10 @@ export const GetUserFeed = (callback, {pageSize, textSearch}) =>{
     console.log(textSearch, users);
 
    callback(users.slice(0, pageSize));
+}
+
+export const GetAllUsers = () => {
+    return MOCK_USERS;
 }
 
 export const GetUserById=(id) =>{
@@ -125,7 +129,7 @@ const MOCK_USERS = [
     },
     mockUser(6, "John Kennedy", "Self-Employed Filantropist", "Genius, Hopeful, Successful, Believer, Humble", "37","https://randomuser.me/api/portraits/men/8.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"], "https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
     mockUser(7, "Jack Black", "Musician", "Straight-forward, Creative, Busy, Charming, Funny", "56","https://randomuser.me/api/portraits/men/9.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
-    mockUser(8, "Catherine El Mugeto", "Singer/Mom", "Honest, Abrupt, Funny, Serious", "50%","https://randomuser.me/api/portraits/men/10.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
+    mockUser(8, "Catherine El Mugeto", "Singer/Mom", "Honest, Abrupt, Funny, Serious", "50","https://randomuser.me/api/portraits/men/10.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
     mockUser(9, "Jonny Black", "Product Manager at PearlBright", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/11.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
     mockUser(10, "Pramiro Hon Cuse", "", "Loyal, Hard-working, Serious, Cheerful, Determined", "50","https://randomuser.me/api/portraits/men/12.jpg", "Scranton, PA", ["Field of work: Paper management", "Duration: 20 years", "Skills: sales, management"],"https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2018/04/brandbanner-mcd-1100x200.png"),
 ];

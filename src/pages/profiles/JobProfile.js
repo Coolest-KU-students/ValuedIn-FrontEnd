@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { ToastWrapper } from '../global/notifications/ToastWrapper';
 import ContactPageSharpIcon from '@mui/icons-material/ContactPageSharp';
+import { MatchingCircles } from '../global/MatchingCircles';
 
 export const JobProfile = ({profile}) => {
         const Item = styled(Paper)(({ theme }) => ({
@@ -18,6 +19,12 @@ export const JobProfile = ({profile}) => {
 
         return (
   <Grid container spacing={2}>
+  <Grid item xs={12}>
+  <div> 
+           <MatchingCircles name={profile.jobTitle} match={profile.match}>
+           </MatchingCircles>
+       </div>
+  </Grid>
   <Grid item xs={4}>
     <Item> 
     <Stack spacing={1}>
